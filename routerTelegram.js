@@ -3,7 +3,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const fs = require('fs');
 
 // Utilisation du token (priorité au .env, sinon ton token de test)
-const token = process.env.TELEGRAM_TOKEN || '';
+const token = process.env.TELEGRAM_TOKEN || '6796013823:AAGsNKHU5HUgBbFEodRferD-RhKXxi9SdDE';
 
 // Initialisation du bot avec le polling activé
 const bot = new TelegramBot(token, { polling: true });
