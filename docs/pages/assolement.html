@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stratégie d'Assolement - Jardins du Cœur</title>
+    <!-- On remonte d'un dossier pour aller chercher le CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .c-assolement-table { width: 100%; border-collapse: collapse; background: white; box-shadow: var(--shadow-soft); border-radius: var(--border-radius); overflow: hidden; }
+        .c-assolement-table th, .c-assolement-table td { padding: 15px; text-align: center; border: 1px solid #eee; }
+        .c-assolement-table th { background: var(--color-primary); color: white; }
+        .fam-legumineuse { background-color: #E8F5E9; color: #2E7D32; font-weight: bold; } /* Vert clair */
+        .fam-solanacee { background-color: #FFEBEE; color: #C62828; font-weight: bold; } /* Rouge clair */
+        .fam-racine { background-color: #FFF3E0; color: #EF6C00; font-weight: bold; } /* Orange clair */
+        .fam-repos { background-color: #F5F5F5; color: #757575; font-style: italic; } /* Gris */
+        .c-rules-box { background: white; padding: 20px; border-radius: var(--border-radius); margin-top: 24px; border-left: 4px solid var(--color-secondary); }
+    </style>
+</head>
+<body class="l-app-layout">
+    
+    <!-- Navigation Latérale (Sidebar) -->
+    <aside class="c-sidebar">
+        <div class="c-sidebar__header">
+            <span class="material-icons c-sidebar__logo-icon">eco</span>
+            <h1 class="c-sidebar__title">Jardins du Cœur</h1>
+        </div>
+
+        <nav class="c-sidebar__nav">
+            <ul class="c-nav-list">
+                <li class="c-nav-item"><a href="dashboard.html" class="c-nav-link"><span class="material-icons">dashboard</span> Tableau de Bord</a></li>
+                <li class="c-nav-item"><a href="plan-de-culture.html" class="c-nav-link"><span class="material-icons">view_in_ar</span> Plan de Culture 3D</a></li>
+                <li class="c-nav-item"><a href="fiche-plante.html" class="c-nav-link"><span class="material-icons">local_florist</span> Suivi Plante</a></li>
+                <li class="c-nav-item"><a href="cartographie.html" class="c-nav-link"><span class="material-icons">satellite</span> Cartographie</a></li>
+                <li class="c-nav-item"><a href="calendrier.html" class="c-nav-link"><span class="material-icons">calendar_month</span> Calendrier & Semis</a></li>
+                <li class="c-nav-item">
+                    <!-- Classe ACTIVE sur cette page -->
+                    <a href="assolement.html" class="c-nav-link c-nav-link--active">
+                        <span class="material-icons">autorenew</span> Assolement
+                    </a>
+                </li>
+                <li class="c-nav-item"><a href="atelier.html" class="c-nav-link"><span class="material-icons">handyman</span> Ateliers & CVNU</a></li>
+                <li class="c-nav-item"><a href="galery.html" class="c-nav-link"><span class="material-icons">photo_library</span> Galerie</a></li>
+            </ul>
+        </nav>
+
+        <div class="c-sidebar__footer c-user-widget">
+            <div class="c-user-widget__avatar"><span class="material-icons">person</span></div>
+            <div class="c-user-widget__info">
+                <span class="c-user-widget__name">Bénévole JDC</span>
+                <span class="c-user-widget__points">Points: 120 UTM</span>
+            </div>
+        </div>
+    </aside>
+
+    <main class="l-main-content">
+        <header class="c-topbar"><h2>Gestion de l'Assolement (Rotation)</h2></header>
+        
+        <section class="l-page-content">
+            <p style="margin-bottom: 20px; color: var(--color-text-muted);">Rotation sur 4 ans pour diviser les 250m² et préserver les nutriments du sol.</p>
+
+            <table class="c-assolement-table">
+                <thead>
+                    <tr>
+                        <th>Zone (Parcelles)</th>
+                        <th>Année 1 (2026)</th>
+                        <th>Année 2 (2027)</th>
+                        <th>Année 3 (2028)</th>
+                        <th>Année 4 (2029)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Zone A</strong> (Nord)</td>
+                        <td class="fam-solanacee">Gourmandes (Tomates, Courges)</td>
+                        <td class="fam-racine">Racines (Carottes, Radis)</td>
+                        <td class="fam-legumineuse">Légumineuses (Pois, Fèves)</td>
+                        <td class="fam-repos">Engrais vert (Moutarde)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Zone B</strong> (Est)</td>
+                        <td class="fam-repos">Engrais vert (Moutarde)</td>
+                        <td class="fam-solanacee">Gourmandes (Tomates, Courges)</td>
+                        <td class="fam-racine">Racines (Carottes, Radis)</td>
+                        <td class="fam-legumineuse">Légumineuses (Pois, Fèves)</td>
+                    </tr>
+                    <!-- Les autres zones suivent le décalage... -->
+                </tbody>
+            </table>
+
+            <div class="c-rules-box">
+                <h3><span class="material-icons" style="vertical-align: middle;">rule</span> Règles d'IA actives :</h3>
+                <p>Le système (Groq) bloquera toute tentative de planter une Solanacée sur la Zone A en 2027 pour éviter la transmission du mildiou.</p>
+            </div>
+        </section>
+    </main>
+    
+    <!-- JS de base -->
+    <script src="../js/script.js"></script>
+</body>
+</html>

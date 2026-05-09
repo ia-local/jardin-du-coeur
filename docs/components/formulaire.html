@@ -1,0 +1,28 @@
+<!-- Composant : Formulaire Standard (.c-form) -->
+<form id="form-benevole" class="c-form" novalidate>
+    <div class="c-form-group">
+        <label for="email">Adresse Email :</label>
+        <input type="email" id="email" class="c-input" placeholder="benevole@jardins.fr" required>
+        <span class="c-error-msg" id="error-email">Format d'email invalide.</span>
+    </div>
+    <button type="submit" class="c-btn-action">Valider l'inscription</button>
+</form>
+
+<script>
+    // Validation Regex au format modulaire
+    document.getElementById('form-benevole').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const emailInput = document.getElementById('email');
+        const errorMsg = document.getElementById('error-email');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(emailInput.value)) {
+            emailInput.classList.add('c-input--error');
+            errorMsg.style.display = 'block';
+        } else {
+            emailInput.classList.remove('c-input--error');
+            errorMsg.style.display = 'none';
+            console.log("Validation réussie, envoi au serveur...");
+        }
+    });
+</script>

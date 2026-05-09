@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord - Jardins du Cœur</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .c-dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 24px; }
+        .c-widget { background: white; padding: 20px; border-radius: var(--border-radius); box-shadow: var(--shadow-soft); }
+        .c-widget-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+        .c-widget-title { color: var(--color-primary); font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+        .c-stat-big { font-size: 2.5rem; font-weight: bold; color: var(--color-text-main); }
+        .c-weather-box { background: #E3F2FD; padding: 15px; border-radius: 8px; display: flex; align-items: center; gap: 15px; }
+        .c-task-list { list-style: none; }
+        .c-task-list li { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding: 10px; background: #f9f9f9; border-radius: 6px; border-left: 3px solid var(--color-secondary); }
+    </style>
+</head>
+<body class="l-app-layout">
+    
+    <!-- Navigation Latérale (Sidebar) -->
+    <aside class="c-sidebar">
+        <div class="c-sidebar__header">
+            <span class="material-icons c-sidebar__logo-icon">eco</span>
+            <h1 class="c-sidebar__title">Jardins du Cœur</h1>
+        </div>
+
+        <nav class="c-sidebar__nav">
+            <ul class="c-nav-list">
+                <li class="c-nav-item">
+                    <!-- Classe ACTIVE sur cette page -->
+                    <a href="dashboard.html" class="c-nav-link c-nav-link--active">
+                        <span class="material-icons">dashboard</span> Tableau de Bord
+                    </a>
+                </li>
+                <li class="c-nav-item"><a href="plan-de-culture.html" class="c-nav-link"><span class="material-icons">view_in_ar</span> Plan de Culture 3D</a></li>
+                <li class="c-nav-item"><a href="fiche-plante.html" class="c-nav-link"><span class="material-icons">local_florist</span> Suivi Plante</a></li>
+                <li class="c-nav-item"><a href="cartographie.html" class="c-nav-link"><span class="material-icons">satellite</span> Cartographie</a></li>
+                <li class="c-nav-item"><a href="calendrier.html" class="c-nav-link"><span class="material-icons">calendar_month</span> Calendrier & Semis</a></li>
+                <li class="c-nav-item"><a href="assolement.html" class="c-nav-link"><span class="material-icons">autorenew</span> Assolement</a></li>
+                <li class="c-nav-item"><a href="atelier.html" class="c-nav-link"><span class="material-icons">handyman</span> Ateliers & CVNU</a></li>
+                <li class="c-nav-item"><a href="galery.html" class="c-nav-link"><span class="material-icons">photo_library</span> Galerie</a></li>
+            </ul>
+        </nav>
+
+        <div class="c-sidebar__footer c-user-widget">
+            <div class="c-user-widget__avatar"><span class="material-icons">person</span></div>
+            <div class="c-user-widget__info">
+                <span class="c-user-widget__name">Bénévole JDC</span>
+                <span class="c-user-widget__points">Points: 120 UTM</span>
+            </div>
+        </div>
+    </aside> 
+
+    <main class="l-main-content">
+        <header class="c-topbar"><h2>Vue d'ensemble - Mai 2026</h2></header>
+        
+        <section class="l-page-content">
+            <div class="c-dashboard-grid">
+                
+                <!-- Widget Météo (Bavent) -->
+                <div class="c-widget">
+                    <div class="c-widget-header">
+                        <h3 class="c-widget-title"><span class="material-icons">cloud</span> Météo Bavent</h3>
+                    </div>
+                    <div class="c-weather-box">
+                        <span class="material-icons" style="font-size: 40px; color: #1976D2;">water_drop</span>
+                        <div>
+                            <strong>Pluie prévue demain</strong>
+                            <p style="font-size: 0.9rem; color: var(--color-text-muted);">Idéal pour le repiquage des poireaux. Éviter l'arrosage ce soir.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Widget Urgences (Lié au JSON) -->
+                <div class="c-widget">
+                    <div class="c-widget-header">
+                        <h3 class="c-widget-title"><span class="material-icons" style="color: var(--color-secondary);">warning</span> Tâches urgentes</h3>
+                    </div>
+                    <ul class="c-task-list">
+                        <li><span class="material-icons" style="color: var(--color-secondary);">agriculture</span> <span>Récolte : Radis 18J (Parcelle X1)</span></li>
+                        <li><span class="material-icons" style="color: var(--color-primary);">water</span> <span>Arrosage : Serre semis (Critique)</span></li>
+                    </ul>
+                </div>
+
+                <!-- Widget Métriques CVNU -->
+                <div class="c-widget">
+                    <div class="c-widget-header">
+                        <h3 class="c-widget-title"><span class="material-icons">eco</span> Impact Global</h3>
+                    </div>
+                    <div>
+                        <div style="margin-bottom: 10px;"><span class="c-stat-big">15</span> Bénévoles actifs</div>
+                        <div><span class="c-stat-big" style="color: var(--color-secondary);">450</span> UTM générés</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+    
+    <!-- JS de base -->
+    <script src="../js/script.js"></script>
+</body>
+</html>

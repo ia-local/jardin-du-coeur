@@ -1,0 +1,60 @@
+<!-- Composant : Modal (.c-modal) -->
+<div id="plantModal" class="c-modal" aria-hidden="true" role="dialog">
+    <div class="c-modal-content">
+        <span class="c-modal-close" onclick="hideModal('plantModal')">&times;</span>
+        <h3 id="modal-title">Détail de la Plante</h3>
+        <p id="modal-body">Chargement des données...</p>
+        
+        <!-- Bouton pour déclencher la Voix de l'IA -->
+        <button class="c-btn-action c-btn--voice" onclick="parlerPlante('Tomate Marmande')">
+            <span class="material-icons">record_voice_over</span> Écouter la plante
+        </button>
+    </div>
+</div>
+
+<!-- Composant : Pagination (.c-pagination) -->
+<nav class="c-pagination">
+    <button class="c-page-btn" disabled>&laquo; Préc</button>
+    <span class="c-page-num c-page-num--active">1</span>
+    <span class="c-page-num">2</span>
+    <span class="c-page-num">3</span>
+    <button class="c-page-btn">Suiv &raquo;</button>
+</nav>
+
+<style>
+    /* CSS Modulaire pour Modal */
+    .c-modal {
+        display: none; position: fixed; z-index: 1000; left: 0; top: 0;
+        width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);
+        align-items: center; justify-content: center;
+    }
+    .c-modal-content {
+        background-color: var(--color-bg-app); padding: 24px;
+        border-radius: var(--border-radius); width: 90%; max-width: 500px;
+        box-shadow: var(--shadow-soft); position: relative;
+    }
+    .c-modal-close { position: absolute; right: 20px; top: 15px; font-size: 24px; cursor: pointer; color: var(--color-text-muted); }
+    
+    /* CSS Modulaire pour Pagination */
+    .c-pagination { display: flex; gap: 8px; justify-content: center; margin-top: 20px; }
+    .c-page-num, .c-page-btn { padding: 8px 12px; border: 1px solid var(--color-primary); border-radius: 4px; cursor: pointer; color: var(--color-primary); background: white; }
+    .c-page-num--active { background: var(--color-primary); color: white; font-weight: bold; }
+</style>
+
+<script>
+    // JS Modulaire pour Modal
+    function showModal(id) {
+        const modal = document.getElementById(id);
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden', 'false');
+    }
+    function hideModal(id) {
+        const modal = document.getElementById(id);
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+    }
+    // Écouteur d'échappement (ESCAPE)
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') hideModal('plantModal');
+    });
+</script>

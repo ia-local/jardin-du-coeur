@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie - Jardins du Cœur</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .c-gallery-filters { display: flex; gap: 10px; margin-bottom: 24px; }
+        .c-filter-btn { padding: 8px 16px; border: 1px solid var(--color-primary); background: transparent; color: var(--color-primary); border-radius: 20px; cursor: pointer; }
+        .c-filter-btn.active { background: var(--color-primary); color: white; }
+        
+        .c-gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+        .c-photo-card { border-radius: 8px; overflow: hidden; box-shadow: var(--shadow-soft); background: white; transition: transform 0.2s; cursor: pointer; }
+        .c-photo-card:hover { transform: translateY(-5px); }
+        .c-photo-img { width: 100%; height: 200px; object-fit: cover; display: block; background: #eee; }
+        .c-photo-caption { padding: 12px; font-size: 0.9rem; color: var(--color-text-main); }
+        .c-photo-date { display: block; font-size: 0.75rem; color: var(--color-text-muted); margin-top: 4px; }
+    </style>
+</head>
+<body class="l-app-layout">
+    
+    <!-- Navigation Latérale (Sidebar) -->
+    <aside class="c-sidebar">
+        <div class="c-sidebar__header">
+            <span class="material-icons c-sidebar__logo-icon">eco</span>
+            <h1 class="c-sidebar__title">Jardins du Cœur</h1>
+        </div>
+
+        <nav class="c-sidebar__nav">
+            <ul class="c-nav-list">
+                <li class="c-nav-item"><a href="dashboard.html" class="c-nav-link"><span class="material-icons">dashboard</span> Tableau de Bord</a></li>
+                <li class="c-nav-item"><a href="plan-de-culture.html" class="c-nav-link"><span class="material-icons">view_in_ar</span> Plan de Culture 3D</a></li>
+                <li class="c-nav-item"><a href="fiche-plante.html" class="c-nav-link"><span class="material-icons">local_florist</span> Suivi Plante</a></li>
+                <li class="c-nav-item"><a href="cartographie.html" class="c-nav-link"><span class="material-icons">satellite</span> Cartographie</a></li>
+                <li class="c-nav-item"><a href="calendrier.html" class="c-nav-link"><span class="material-icons">calendar_month</span> Calendrier & Semis</a></li>
+                <li class="c-nav-item"><a href="assolement.html" class="c-nav-link"><span class="material-icons">autorenew</span> Assolement</a></li>
+                <li class="c-nav-item"><a href="atelier.html" class="c-nav-link"><span class="material-icons">handyman</span> Ateliers & CVNU</a></li>
+                <li class="c-nav-item">
+                    <!-- Classe ACTIVE sur cette page -->
+                    <a href="galery.html" class="c-nav-link c-nav-link--active">
+                        <span class="material-icons">photo_library</span> Galerie
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="c-sidebar__footer c-user-widget">
+            <div class="c-user-widget__avatar"><span class="material-icons">person</span></div>
+            <div class="c-user-widget__info">
+                <span class="c-user-widget__name">Bénévole JDC</span>
+                <span class="c-user-widget__points">Points: 120 UTM</span>
+            </div>
+        </div>
+    </aside>
+
+    <main class="l-main-content">
+        <header class="c-topbar">
+            <h2>Galerie Visuelle</h2>
+            <button class="c-badge c-badge--alert" style="border:none; cursor:pointer; background-color: var(--color-primary);">+ Ajouter Photo</button>
+        </header>
+        
+        <section class="l-page-content">
+            <div class="c-gallery-filters">
+                <button class="c-filter-btn active">Tout</button>
+                <button class="c-filter-btn">Évolution Terrain</button>
+                <button class="c-filter-btn">Récoltes</button>
+                <button class="c-filter-btn">Ateliers & Bénévoles</button>
+            </div>
+
+            <div class="c-gallery-grid">
+                <!-- Photo 1 -->
+                <div class="c-photo-card">
+                    <img src="../data/galery/20260507_151136.jpg" alt="Préparation serre" class="c-photo-img">
+                    <div class="c-photo-caption">
+                        Installation de la structure de serre.
+                        <span class="c-photo-date">07 Mai 2026</span>
+                    </div>
+                </div>
+                <!-- Photo 2 -->
+                <div class="c-photo-card">
+                    <img src="../data/galery/20260507_174703.jpg" alt="Premiers semis" class="c-photo-img">
+                    <div class="c-photo-caption">
+                        Atelier semis de printemps.
+                        <span class="c-photo-date">07 Mai 2026</span>
+                    </div>
+                </div>
+                <!-- Vous pourrez générer les autres cartes dynamiquement via JS en lisant le dossier -->
+            </div>
+        </section>
+    </main>
+    
+    <!-- JS de base -->
+    <script src="../js/script.js"></script>
+</body>
+</html>

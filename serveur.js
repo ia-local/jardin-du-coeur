@@ -78,7 +78,28 @@ app.post('/api/oracle', async (req, res) => {
         res.status(500).json({ error: "L'Oracle est momentanément indisponible." });
     }
 });
+// Nouveau End-Point pour la "Voix" des plantes
+app.post('/api/plant-voice', async (req, res) => {
+    try {
+        const { nomPlante, etatSol } = req.body;
 
+        // Prompt systémique forçant le modèle à jouer le rôle de la plante
+        const promptVoix = `Tu es une plante du Jardin du Cœur. Tu es un(e) ${nomPlante}. Le sol actuel est ${etatSol}. 
+        Parle à la première personne (Je). Fais une seule phrase courte (max 15 mots) pour dire comment tu te sens aujourd'hui en Normandie. 
+        Sois vivant et poétique, mais très bref. Ne dis pas "Bonjour".`;
+
+        const chatCompletion = await groq.chat.completions.create({
+            messages: [{ role: "user", content: promptVoix }],
+            model: "llama-3.1-8b-instant",
+            temperature: 0.7,
+            max_tokens: 50,
+        });
+
+        res.json({ success: true, texte_parle: chatCompletion.choices[0].message.content });
+    } catch (error) {
+        res.status(500).json({ error: "Je n'ai plus de voix aujourd'hui..." });
+    }
+});
 // Route de fallback pour renvoyer index.html (utile pour la navigation de type Single Page App)
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'docs', 'index.html'));

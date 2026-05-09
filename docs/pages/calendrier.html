@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendrier - Jardins du Cœur</title>
+    <!-- On remonte d'un dossier pour aller chercher le CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .c-month-section { margin-bottom: 24px; }
+        .c-month-title { font-size: 1.2rem; color: var(--color-primary); border-bottom: 2px solid var(--color-primary); padding-bottom: 8px; margin-bottom: 16px; }
+        .c-task-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; background: white; border: 1px solid #eee; border-radius: 8px; margin-bottom: 8px; box-shadow: var(--shadow-soft); }
+        .c-task-tag { padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; color: white; }
+        .tag-semis { background-color: #D84315; } /* Orange */
+        .tag-recolte { background-color: #2E7D32; } /* Vert */
+    </style>
+</head>
+<body class="l-app-layout">
+    
+    <!-- Navigation Latérale (Sidebar) -->
+    <aside class="c-sidebar">
+        <div class="c-sidebar__header">
+            <span class="material-icons c-sidebar__logo-icon">eco</span>
+            <h1 class="c-sidebar__title">Jardins du Cœur</h1>
+        </div>
+
+        <nav class="c-sidebar__nav">
+            <ul class="c-nav-list">
+                <li class="c-nav-item"><a href="dashboard.html" class="c-nav-link"><span class="material-icons">dashboard</span> Tableau de Bord</a></li>
+                <li class="c-nav-item"><a href="plan-de-culture.html" class="c-nav-link"><span class="material-icons">view_in_ar</span> Plan de Culture 3D</a></li>
+                <li class="c-nav-item"><a href="fiche-plante.html" class="c-nav-link"><span class="material-icons">local_florist</span> Suivi Plante</a></li>
+                <li class="c-nav-item"><a href="cartographie.html" class="c-nav-link"><span class="material-icons">satellite</span> Cartographie</a></li>
+                <li class="c-nav-item">
+                    <!-- Classe ACTIVE sur cette page -->
+                    <a href="calendrier.html" class="c-nav-link c-nav-link--active">
+                        <span class="material-icons">calendar_month</span> Calendrier & Semis
+                    </a>
+                </li>
+                <li class="c-nav-item"><a href="assolement.html" class="c-nav-link"><span class="material-icons">autorenew</span> Assolement</a></li>
+                <li class="c-nav-item"><a href="atelier.html" class="c-nav-link"><span class="material-icons">handyman</span> Ateliers & CVNU</a></li>
+                <li class="c-nav-item"><a href="galery.html" class="c-nav-link"><span class="material-icons">photo_library</span> Galerie</a></li>
+            </ul>
+        </nav>
+
+        <div class="c-sidebar__footer c-user-widget">
+            <div class="c-user-widget__avatar"><span class="material-icons">person</span></div>
+            <div class="c-user-widget__info">
+                <span class="c-user-widget__name">Bénévole JDC</span>
+                <span class="c-user-widget__points">Points: 120 UTM</span>
+            </div>
+        </div>
+    </aside> 
+
+    <main class="l-main-content">
+        <header class="c-topbar"><h2>Calendrier de la Saison (Bavent)</h2></header>
+        
+        <section class="l-page-content">
+            <div class="c-month-section">
+                <h3 class="c-month-title">Avril 2026</h3>
+                <div class="c-task-item">
+                    <div>
+                        <strong>Tomates Marmande (Parcelle X2-Z4)</strong>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted);">Transférer les plants de la pépinière vers la pleine terre.</p>
+                    </div>
+                    <span class="c-task-tag tag-semis">Repiquage</span>
+                </div>
+                <div class="c-task-item">
+                    <div>
+                        <strong>Radis 18 Jours (Parcelle X1-Z1)</strong>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted);">Semis direct en ligne, éclaircir à 3cm.</p>
+                    </div>
+                    <span class="c-task-tag tag-semis">Semis</span>
+                </div>
+            </div>
+
+            <div class="c-month-section">
+                <h3 class="c-month-title">Mai 2026</h3>
+                <div class="c-task-item">
+                    <div>
+                        <strong>Radis 18 Jours (Parcelle X1-Z1)</strong>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted);">Maturité atteinte, récolte estimée à 2kg.</p>
+                    </div>
+                    <span class="c-task-tag tag-recolte">Récolte</span>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- JS de base -->
+    <script src="../js/script.js"></script>
+</body>
+</html>

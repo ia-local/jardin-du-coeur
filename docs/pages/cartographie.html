@@ -5,46 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cartographie - Les Jardins du Cœur</title>
     
-    <!-- CSS de l'application -->
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
-    <!-- CSS de Leaflet (Requis pour la carte) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <style>
-        /* Style spécifique pour le conteneur de la carte */
-        #map-container {
-            height: 600px;
-            width: 100%;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-soft);
-            overflow: hidden;
-            border: 2px solid var(--color-primary);
-        }
-        
-        .c-map-panel {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 24px;
-        }
-
-        .c-zone-info {
-            background: white;
-            padding: 20px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-soft);
-        }
+        #map-container { height: 600px; width: 100%; border-radius: var(--border-radius); box-shadow: var(--shadow-soft); overflow: hidden; border: 2px solid var(--color-primary); }
+        .c-map-panel { display: grid; grid-template-columns: 1fr 300px; gap: 24px; }
+        .c-zone-info { background: white; padding: 20px; border-radius: var(--border-radius); box-shadow: var(--shadow-soft); }
     </style>
 </head>
 <body class="l-app-layout">
 
-    <!-- Navigation Latérale (Sidebar) - Identique aux autres pages -->
+    <!-- Navigation Latérale (Sidebar) -->
     <aside class="c-sidebar">
-        <!-- ... [Copier/Coller ici le contenu de la sidebar générée précédemment] ... -->
+        <div class="c-sidebar__header">
+            <span class="material-icons c-sidebar__logo-icon">eco</span>
+            <h1 class="c-sidebar__title">Jardins du Cœur</h1>
+        </div>
+
+        <nav class="c-sidebar__nav">
+            <ul class="c-nav-list">
+                <li class="c-nav-item"><a href="dashboard.html" class="c-nav-link"><span class="material-icons">dashboard</span> Tableau de Bord</a></li>
+                <li class="c-nav-item"><a href="plan-de-culture.html" class="c-nav-link"><span class="material-icons">view_in_ar</span> Plan de Culture 3D</a></li>
+                <li class="c-nav-item"><a href="fiche-plante.html" class="c-nav-link"><span class="material-icons">local_florist</span> Suivi Plante</a></li>
+                <li class="c-nav-item">
+                    <!-- Classe ACTIVE sur cette page -->
+                    <a href="cartographie.html" class="c-nav-link c-nav-link--active">
+                        <span class="material-icons">satellite</span> Cartographie
+                    </a>
+                </li>
+                <li class="c-nav-item"><a href="calendrier.html" class="c-nav-link"><span class="material-icons">calendar_month</span> Calendrier & Semis</a></li>
+                <li class="c-nav-item"><a href="assolement.html" class="c-nav-link"><span class="material-icons">autorenew</span> Assolement</a></li>
+                <li class="c-nav-item"><a href="atelier.html" class="c-nav-link"><span class="material-icons">handyman</span> Ateliers & CVNU</a></li>
+                <li class="c-nav-item"><a href="galery.html" class="c-nav-link"><span class="material-icons">photo_library</span> Galerie</a></li>
+            </ul>
+        </nav>
+
+        <div class="c-sidebar__footer c-user-widget">
+            <div class="c-user-widget__avatar"><span class="material-icons">person</span></div>
+            <div class="c-user-widget__info">
+                <span class="c-user-widget__name">Bénévole JDC</span>
+                <span class="c-user-widget__points">Points: 120 UTM</span>
+            </div>
+        </div>
     </aside>
 
-    <!-- Contenu Principal -->
     <main class="l-main-content">
         <header class="c-topbar">
             <h2>Vue Aérienne du Terrain (Bavent)</h2>
@@ -54,10 +60,7 @@
         </header>
         
         <section class="l-page-content c-map-panel">
-            <!-- Conteneur de la carte Leaflet -->
             <div id="map-container"></div>
-
-            <!-- Panneau d'informations latéral -->
             <aside class="c-zone-info">
                 <h3 style="color: var(--color-primary); margin-bottom: 15px;">Détails de la parcelle</h3>
                 <p><strong>Surface :</strong> ~250 m²</p>
@@ -69,7 +72,7 @@
                     <li style="margin-bottom: 8px;"><span style="color: #2E7D32;">■</span> Zone de Culture (Pleine terre)</li>
                     <li style="margin-bottom: 8px;"><span style="color: #1976D2;">●</span> Point d'eau estimé</li>
                 </ul>
-                <button style="width: 100%; padding: 10px; margin-top: 20px; background: var(--color-primary); color: white; border: none; border-radius: 8px; cursor: pointer;">
+                <button style="width: 100%; padding: 10px; margin-top: 20px; background: var(--color-primary); color: white; border: none; border-radius: 8px; cursor: pointer;" onclick="window.location.href='plan-de-culture.html'">
                     Passer en vue 3D (Three.js)
                 </button>
             </aside>
@@ -78,57 +81,25 @@
 
     <!-- JS de Leaflet -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
-    <!-- Script d'initialisation de la carte -->
     <script>
-        // 1. Initialisation de la carte centrée sur Bavent
-        // Zoom niveau 19 pour voir les détails d'un terrain de 250m²
         const map = L.map('map-container').setView([49.279730, -0.123918], 19);
-
-        // 2. Ajout de la couche Satellite (Esri World Imagery)
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+            attribution: 'Tiles &copy; Esri',
             maxZoom: 20
         }).addTo(map);
 
-        // 3. Délimitation du terrain de 250m² (Polygone approximatif autour du point central)
-        const terrainBounds = [
-            [49.279820, -0.124020], // Nord Ouest
-            [49.279820, -0.123800], // Nord Est
-            [49.279640, -0.123800], // Sud Est
-            [49.279640, -0.124020]  // Sud Ouest
-        ];
-
-        // Dessin du contour principal
-        const parcelle = L.polygon(terrainBounds, {
-            color: '#2E7D32', // Vert de notre charte
-            weight: 3,
-            fillColor: '#4CAF50',
-            fillOpacity: 0.2
-        }).addTo(map);
-
+        const terrainBounds = [ [49.279820, -0.124020], [49.279820, -0.123800], [49.279640, -0.123800], [49.279640, -0.124020] ];
+        const parcelle = L.polygon(terrainBounds, { color: '#2E7D32', weight: 3, fillColor: '#4CAF50', fillOpacity: 0.2 }).addTo(map);
         parcelle.bindPopup("<b>Jardin du Cœur</b><br>Zone de culture principale (250m²)");
 
-        // 4. Ajout d'un marqueur pour le point d'eau ou le cabanon
-        const pointEau = L.circleMarker([49.279780, -0.123990], {
-            color: '#1976D2',
-            radius: 6,
-            fillOpacity: 1
-        }).addTo(map);
+        const pointEau = L.circleMarker([49.279780, -0.123990], { color: '#1976D2', radius: 6, fillOpacity: 1 }).addTo(map);
         pointEau.bindPopup("Point d'accès eau");
 
-        // 5. Zone de pépinière (Ateliers)
-        const pepiniere = L.polygon([
-            [49.279700, -0.123850],
-            [49.279700, -0.123800],
-            [49.279650, -0.123800],
-            [49.279650, -0.123850]
-        ], {
-            color: '#D84315', // Orange de notre charte (Ateliers/CVNU)
-            fillOpacity: 0.5
-        }).addTo(map);
+        const pepiniere = L.polygon([ [49.279700, -0.123850], [49.279700, -0.123800], [49.279650, -0.123800], [49.279650, -0.123850] ], { color: '#D84315', fillOpacity: 0.5 }).addTo(map);
         pepiniere.bindPopup("<b>Zone Pépinière / Ateliers</b><br>Fabrication des semis et bacs.");
-
     </script>
+    
+    <!-- JS de base -->
+    <script src="../js/script.js"></script>
 </body>
 </html>

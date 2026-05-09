@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ateliers & Réinsertion - Jardins du Cœur</title>
+    <!-- On remonte d'un dossier pour aller chercher le CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .c-atelier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .c-atelier-card { border: 1px solid #e0e0e0; position: relative; overflow: hidden; }
+        .c-atelier-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: var(--color-secondary); }
+        .c-cvnu-points { display: inline-flex; align-items: center; gap: 4px; background: rgba(216, 67, 21, 0.1); color: var(--color-secondary); padding: 4px 10px; border-radius: 20px; font-weight: bold; margin-top: 10px; }
+    </style>
+</head>
+<body class="l-app-layout">
+    
+    <!-- Navigation Latérale (Sidebar) -->
+    <aside class="c-sidebar">
+        <div class="c-sidebar__header">
+            <span class="material-icons c-sidebar__logo-icon">eco</span>
+            <h1 class="c-sidebar__title">Jardins du Cœur</h1>
+        </div>
+
+        <nav class="c-sidebar__nav">
+            <ul class="c-nav-list">
+                <li class="c-nav-item"><a href="dashboard.html" class="c-nav-link"><span class="material-icons">dashboard</span> Tableau de Bord</a></li>
+                <li class="c-nav-item"><a href="plan-de-culture.html" class="c-nav-link"><span class="material-icons">view_in_ar</span> Plan de Culture 3D</a></li>
+                <li class="c-nav-item"><a href="fiche-plante.html" class="c-nav-link"><span class="material-icons">local_florist</span> Suivi Plante</a></li>
+                <li class="c-nav-item"><a href="cartographie.html" class="c-nav-link"><span class="material-icons">satellite</span> Cartographie</a></li>
+                <li class="c-nav-item"><a href="calendrier.html" class="c-nav-link"><span class="material-icons">calendar_month</span> Calendrier & Semis</a></li>
+                <li class="c-nav-item"><a href="assolement.html" class="c-nav-link"><span class="material-icons">autorenew</span> Assolement</a></li>
+                <li class="c-nav-item">
+                    <!-- Classe ACTIVE sur cette page -->
+                    <a href="atelier.html" class="c-nav-link c-nav-link--active">
+                        <span class="material-icons">handyman</span> Ateliers & CVNU
+                    </a>
+                </li>
+                <li class="c-nav-item"><a href="galery.html" class="c-nav-link"><span class="material-icons">photo_library</span> Galerie</a></li>
+            </ul>
+        </nav>
+
+        <div class="c-sidebar__footer c-user-widget">
+            <div class="c-user-widget__avatar"><span class="material-icons">person</span></div>
+            <div class="c-user-widget__info">
+                <span class="c-user-widget__name">Bénévole JDC</span>
+                <span class="c-user-widget__points">Points: 120 UTM</span>
+            </div>
+        </div>
+    </aside> 
+
+    <main class="l-main-content">
+        <header class="c-topbar"><h2>Ateliers & Valorisation CVNU</h2></header>
+        
+        <section class="l-page-content">
+            <p style="margin-bottom: 24px; color: var(--color-text-muted);">Les tâches ci-dessous sont générées automatiquement selon les besoins du plan de culture.</p>
+            
+            <div class="c-atelier-grid">
+                <!-- Atelier 1 -->
+                <div class="c-card c-atelier-card">
+                    <h3>Préparation des Semis (Tomates)</h3>
+                    <p style="font-size: 0.9rem; margin: 10px 0;">Besoin identifié : 25 plants pour le plan de culture 3D. Fabrication des godets et semis en serre.</p>
+                    <p><strong>Charge de travail estimée :</strong> 2h30</p>
+                    <div class="c-cvnu-points"><span class="material-icons" style="font-size: 16px;">stars</span> + 30 UTM</div>
+                    <button class="c-btn-action" style="width: 100%; margin-top: 16px;">S'inscrire à l'atelier</button>
+                </div>
+
+                <!-- Atelier 2 -->
+                <div class="c-card c-atelier-card">
+                    <h3>Menuiserie : Bacs de bouturage</h3>
+                    <p style="font-size: 0.9rem; margin: 10px 0;">Construction de 3 bacs en bois de récupération pour étendre la pépinière.</p>
+                    <p><strong>Charge de travail estimée :</strong> 4h00</p>
+                    <div class="c-cvnu-points"><span class="material-icons" style="font-size: 16px;">stars</span> + 50 UTM</div>
+                    <button class="c-btn-action" style="width: 100%; margin-top: 16px;">S'inscrire à l'atelier</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- JS -->
+    <script src="../js/script.js"></script>
+</body>
+</html>

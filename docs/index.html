@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les Jardins du Cœur - Tableau de Bord</title>
+    <title>Les Jardins du Cœur - Accueil</title>
     <!-- Lien vers votre CSS -->
     <link rel="stylesheet" href="css/style.css">
-    <!-- Icônes (ex: FontAwesome ou Material Icons) -->
+    <!-- Icônes Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body class="l-app-layout">
@@ -21,43 +21,49 @@
         <nav class="c-sidebar__nav">
             <ul class="c-nav-list">
                 <li class="c-nav-item">
-                    <a href="dashboard.html" class="c-nav-link c-nav-link--active">
+                    <a href="pages/dashboard.html" class="c-nav-link c-nav-link--active">
                         <span class="material-icons">dashboard</span>
                         Tableau de Bord
                     </a>
                 </li>
                 <li class="c-nav-item">
                     <a href="pages/plan-de-culture.html" class="c-nav-link">
-                        <span class="material-icons">map</span>
+                        <span class="material-icons">view_in_ar</span>
                         Plan de Culture 3D
                     </a>
                 </li>
                 <li class="c-nav-item">
-                    <a href="pages/cartographie.html" class="c-nav-link c-nav-link--active">
-                        <span class="material-icons">Cartographie</span>
+                    <a href="pages/fiche-plante.html" class="c-nav-link">
+                        <span class="material-icons">local_florist</span>
+                        Suivi Plante
+                    </a>
+                </li>
+                <li class="c-nav-item">
+                    <a href="pages/cartographie.html" class="c-nav-link">
+                        <span class="material-icons">satellite</span>
                         Cartographie
                     </a>
                 </li>
                 <li class="c-nav-item">
-                    <a href="calendrier.html" class="c-nav-link">
+                    <a href="pages/calendrier.html" class="c-nav-link">
                         <span class="material-icons">calendar_month</span>
                         Calendrier & Semis
                     </a>
                 </li>
                 <li class="c-nav-item">
-                    <a href="assolement.html" class="c-nav-link">
+                    <a href="pages/assolement.html" class="c-nav-link">
                         <span class="material-icons">autorenew</span>
                         Assolement
                     </a>
                 </li>
                 <li class="c-nav-item">
-                    <a href="atelier.html" class="c-nav-link">
+                    <a href="pages/atelier.html" class="c-nav-link">
                         <span class="material-icons">handyman</span>
                         Ateliers & CVNU
                     </a>
                 </li>
                 <li class="c-nav-item">
-                    <a href="galery.html" class="c-nav-link">
+                    <a href="pages/galery.html" class="c-nav-link">
                         <span class="material-icons">photo_library</span>
                         Galerie
                     </a>
@@ -87,14 +93,16 @@
         </header>
         
         <section class="l-page-content">
-            <!-- C'est ici que viendra le contenu spécifique de chaque page (ex: les cartes du dashboard, le canvas ThreeJS, etc.) -->
-            <div class="c-card">
-                <p>Bienvenue dans l'interface des Jardins du Cœur. Le contenu de la page s'affichera ici.</p>
+            <div class="c-card" style="text-align: center; padding: 40px;">
+                <span class="material-icons" style="font-size: 60px; color: var(--color-primary);">eco</span>
+                <h2 style="margin: 20px 0; color: var(--color-primary);">Bienvenue dans le portail des Jardins du Cœur</h2>
+                <p style="color: var(--color-text-muted); margin-bottom: 24px;">Utilisez le menu de gauche pour naviguer vers le tableau de bord, la cartographie de Bavent ou les ateliers.</p>
+                <a href="pages/dashboard.html" class="c-btn-action" style="text-decoration: none; display: inline-block;">Accéder au Tableau de Bord</a>
             </div>
         </section>
     </main>
 
-    <!-- Lien vers votre JS -->
+    <!-- Lien vers le JS principal -->
     <script src="js/script.js"></script>
 </body>
 </html>
