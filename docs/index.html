@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Jardins du Cœur - Tableau de Bord</title>
+    <!-- Lien vers votre CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Icônes (ex: FontAwesome ou Material Icons) -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="l-app-layout">
+
+    <!-- Navigation Latérale (Sidebar) -->
+    <aside class="c-sidebar">
+        <div class="c-sidebar__header">
+            <span class="material-icons c-sidebar__logo-icon">eco</span>
+            <h1 class="c-sidebar__title">Jardins du Cœur</h1>
+        </div>
+
+        <nav class="c-sidebar__nav">
+            <ul class="c-nav-list">
+                <li class="c-nav-item">
+                    <a href="dashboard.html" class="c-nav-link c-nav-link--active">
+                        <span class="material-icons">dashboard</span>
+                        Tableau de Bord
+                    </a>
+                </li>
+                <li class="c-nav-item">
+                    <a href="plan-de-culture.html" class="c-nav-link">
+                        <span class="material-icons">map</span>
+                        Plan de Culture 3D
+                    </a>
+                </li>
+                <li class="c-nav-item">
+                    <a href="calendrier.html" class="c-nav-link">
+                        <span class="material-icons">calendar_month</span>
+                        Calendrier & Semis
+                    </a>
+                </li>
+                <li class="c-nav-item">
+                    <a href="assolement.html" class="c-nav-link">
+                        <span class="material-icons">autorenew</span>
+                        Assolement
+                    </a>
+                </li>
+                <li class="c-nav-item">
+                    <a href="atelier.html" class="c-nav-link">
+                        <span class="material-icons">handyman</span>
+                        Ateliers & CVNU
+                    </a>
+                </li>
+                <li class="c-nav-item">
+                    <a href="galery.html" class="c-nav-link">
+                        <span class="material-icons">photo_library</span>
+                        Galerie
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Intégration CVNU (Bas de la sidebar) -->
+        <div class="c-sidebar__footer c-user-widget">
+            <div class="c-user-widget__avatar">
+                <span class="material-icons">person</span>
+            </div>
+            <div class="c-user-widget__info">
+                <span class="c-user-widget__name">Bénévole JDC</span>
+                <span class="c-user-widget__points">Points: 120 UTM</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Zone de Contenu Principal -->
+    <main class="l-main-content">
+        <header class="c-topbar">
+            <h2>Vue d'ensemble</h2>
+            <div class="c-topbar__actions">
+                <span class="c-badge c-badge--alert">2 actions urgentes</span>
+            </div>
+        </header>
+        
+        <section class="l-page-content">
+            <!-- C'est ici que viendra le contenu spécifique de chaque page (ex: les cartes du dashboard, le canvas ThreeJS, etc.) -->
+            <div class="c-card">
+                <p>Bienvenue dans l'interface des Jardins du Cœur. Le contenu de la page s'affichera ici.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Lien vers votre JS -->
+    <script src="../js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+/* --- VARIABLES (Charte Graphique) --- */
+:root {
+    --color-primary: #2E7D32; /* Vert Nature */
+    --color-primary-light: #4CAF50;
+    --color-secondary: #D84315; /* Orange Terre cuite (Cœur/Argile) */
+    --color-bg-app: #FDFBF7; /* Écru clair */
+    --color-bg-sidebar: #FFFFFF;
+    --color-text-main: #333333;
+    --color-text-muted: #757575;
+    
+    --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --border-radius: 12px;
+}
+
+/* --- RESET & TYPOGRAPHIE --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background-color: var(--color-bg-app);
+    color: var(--color-text-main);
+}
+
+/* --- LAYOUT PRINCIPAL --- */
+.l-app-layout {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* --- SIDEBAR --- */
+.c-sidebar {
+    width: 260px;
+    background-color: var(--color-bg-sidebar);
+    border-right: 1px solid #E0E0E0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-soft);
+    z-index: 10;
+}
+
+.c-sidebar__header {
+    display: flex;
+    align-items: center;
+    padding: 24px;
+    color: var(--color-primary);
+}
+
+.c-sidebar__title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-left: 10px;
+}
+
+/* --- NAVIGATION --- */
+.c-sidebar__nav { flex: 1; padding: 0 16px; }
+.c-nav-list { list-style: none; }
+.c-nav-item { margin-bottom: 8px; }
+
+.c-nav-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+}
+
+.c-nav-link .material-icons { margin-right: 12px; }
+
+.c-nav-link:hover {
+    background-color: rgba(46, 125, 50, 0.05);
+    color: var(--color-primary);
+}
+
+.c-nav-link--active {
+    background-color: rgba(46, 125, 50, 0.1);
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+/* --- WIDGET UTILISATEUR (CVNU) --- */
+.c-sidebar__footer {
+    padding: 20px;
+    border-top: 1px solid #E0E0E0;
+    display: flex;
+    align-items: center;
+}
+.c-user-widget__avatar {
+    background-color: var(--color-secondary);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+}
+.c-user-widget__name { display: block; font-weight: 600; font-size: 0.9rem; }
+.c-user-widget__points { display: block; font-size: 0.8rem; color: var(--color-secondary); font-weight: 700; }
+
+/* --- CONTENU PRINCIPAL --- */
+.l-main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.c-topbar {
+    padding: 24px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.l-page-content {
+    padding: 0 32px 32px 32px;
+}
+
+/* --- COMPOSANTS DE BASE --- */
+.c-card {
+    background: white;
+    padding: 24px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-soft);
+}
+
+.c-badge--alert {
+    background-color: var(--color-secondary);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
