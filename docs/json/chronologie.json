@@ -1,0 +1,7 @@
+{
+  "historique": [
+    { "date": "2026-05-04", "type": "fondation", "titre": "Acquisition & Installation", "desc": "Prise de possession des 250m², installation de la cabane et des outils." },
+    { "date": "2026-05-05", "type": "sol", "titre": "Préparation du sol", "desc": "Terre retournée sur l'ensemble de la parcelle." },
+    { "date": "2026-05-07", "type": "culture", "titre": "Plantations Initiales", "desc": "Semis des Radis, Panais, Poireaux et Salades à l'opposé de la cabane." }
+  ]
+}

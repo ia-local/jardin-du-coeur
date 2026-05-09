@@ -87,5 +87,32 @@
     "ATL-PLA": { "titre": "Plantation & Repiquage", "description": "Transfert de la pépinière vers la pleine terre.", "utm": 40, "icon": "agriculture" },
     "ATL-REC": { "titre": "Récolte & Tri", "description": "Cueillette, pesée et préparation pour la distribution.", "utm": 25, "icon": "shopping_basket" }
   },
-  "inscriptions_ateliers": []
+  "inscriptions_ateliers": [],
+  "evenements": [
+    {
+      "date": "2026-05-01",
+      "titre": "Acquisition du terrain",
+      "desc": "Signature et prise de possession des 250m² à Bavent.",
+      "type": "logistique"
+    },
+    {
+      "date": "2026-05-02",
+      "titre": "Installation technique",
+      "desc": "Mise en place de la cabane (fond à droite) et des outils.",
+      "type": "infrastructure"
+    },
+    {
+      "date": "2026-05-04",
+      "titre": "Préparation du sol",
+      "desc": "Terre retournée et aérée sur l'ensemble de la surface.",
+      "type": "sol"
+    },
+    {
+      "date": "2026-05-07",
+      "titre": "Grand Semis",
+      "desc": "Mise en terre des 4 premières lignes : Radis, Panais, Poireaux, Salades.",
+      "type": "culture"
+    }
+  ]
+
 }
