@@ -1,73 +1,82 @@
 {
+  "historique_jardin": [
+    {
+      "date": "2026-05-04",
+      "etape": "Préparation",
+      "titre": "Travail du sol",
+      "description": "Retournement de la terre sur les 250m². Aération et retrait des adventices majeures.",
+      "metriques": { "surface_traitee_m2": 250, "effort_h": 6 },
+      "tag": "sol"
+    },
+    {
+      "date": "2026-05-07",
+      "etape": "Lancement",
+      "titre": "Premières plantations & semis",
+      "description": "Mise en terre des radis, salades, panais et poireaux sur les lignes de 10m.",
+      "actions": [
+        { "plante": "Radis 18J", "type": "Semis direct", "zone": "ZONE-A-LIGNE-1" },
+        { "plante": "Batavia", "type": "Repiquage", "zone": "ZONE-A-PLANCHE-1" },
+        { "plante": "Panais", "type": "Semis direct", "zone": "ZONE-A-LIGNE-2" },
+        { "plante": "Poireaux", "type": "Repiquage", "zone": "ZONE-B-LIGNE-1" }
+      ],
+      "tag": "culture"
+    }
+  ],
   "fiche_technique_plantes": {
     "tomate_marmande": {
       "id_plante": "PLT-TOM-01",
       "nom_commun": "Tomate Marmande",
       "famille_botanique": "Solanacées",
-      "exigences_sol": ["riche", "drainant", "amendé_compost"],
-      
+      "etat_actuel": "en_pot",
       "parametres_plantation": {
         "distance_inter_plants_cm": 50,
         "distance_inter_rangs_cm": 80,
-        "densite_m2_recommandee": 2.5,
-        "profondeur_travail_sol_cm": 30
+        "densite_m2_recommandee": 2.5
       },
-      
-      "cycle_obtention": {
-        "methode_principale": "semis_pepiniere",
-        "alternatives": ["achat_plant", "bouturage_gourmand"],
-        "duree_levee_jours": 8,
-        "duree_avant_repiquage_semaines": 6,
-        "atelier_cvnu_associe": "AT-JAR-SEMIS-01"
-      },
-      
-      "calcul_charge_travail": {
-        "preparation_sol_min_par_m2": 20,
-        "temps_plantation_min_par_plant": 3,
-        "entretien_hebdo_min_par_m2": 10, 
-        "observations_entretien": "Tuteurage, taille des gourmands, arrosage au pied"
-      },
-      
-      "rendement_et_recolte": {
-        "jours_avant_maturite": 75,
-        "rendement_estime_kg_par_m2": 4.5,
-        "atelier_cvnu_associe": "AT-JAR-REC-01"
+      "cycle_obtention": { "duree_levee_jours": 8, "duree_avant_repiquage_semaines": 6 },
+      "rendement_et_recolte": { "jours_avant_maturite": 75, "rendement_estime_kg_par_m2": 4.5 },
+      "ia_persona": {
+        "caractere": "Impatiente en pot. A hâte de toucher la terre de Bavent.",
+        "prompt_base": "Tu es une Tomate Marmande encore en pot. Tu te sens un peu à l'étroit et tu attends avec impatience que Mickael te repique en pleine terre."
       }
     },
-
     "salade_batavia": {
       "id_plante": "PLT-SAL-02",
       "nom_commun": "Batavia",
       "famille_botanique": "Astéracées",
-      "exigences_sol": ["frais", "humifère"],
-      
-      "parametres_plantation": {
-        "distance_inter_plants_cm": 30,
-        "distance_inter_rangs_cm": 30,
-        "densite_m2_recommandee": 11,
-        "profondeur_travail_sol_cm": 15
-      },
-      
-      "cycle_obtention": {
-        "methode_principale": "semis_caissette",
-        "alternatives": ["semis_pleine_terre"],
-        "duree_levee_jours": 5,
-        "duree_avant_repiquage_semaines": 4,
-        "atelier_cvnu_associe": "AT-JAR-SEMIS-02"
-      },
-      
-      "calcul_charge_travail": {
-        "preparation_sol_min_par_m2": 10,
-        "temps_plantation_min_par_plant": 1.5,
-        "entretien_hebdo_min_par_m2": 5,
-        "observations_entretien": "Désherbage manuel, surveillance limaces"
-      },
-      
-      "rendement_et_recolte": {
-        "jours_avant_maturite": 50,
-        "rendement_estime_kg_par_m2": 2.0,
-        "atelier_cvnu_associe": "AT-JAR-REC-02"
-      }
+      "etat_actuel": "en_terre",
+      "parametres_plantation": { "distance_inter_plants_cm": 30, "distance_inter_rangs_cm": 30 },
+      "rendement_et_recolte": { "jours_avant_maturite": 50 }
+    },
+    "radis_18j": {
+      "id_plante": "PLT-RAD-03",
+      "nom_commun": "Radis 18 Jours",
+      "famille_botanique": "Brassicacées",
+      "etat_actuel": "en_terre",
+      "parametres_plantation": { "distance_inter_plants_cm": 3, "distance_inter_rangs_cm": 15 },
+      "rendement_et_recolte": { "jours_avant_maturite": 20 }
+    },
+    "panais_demi_long": {
+      "id_plante": "PLT-PAN-04",
+      "nom_commun": "Panais",
+      "famille_botanique": "Apiacées",
+      "etat_actuel": "en_terre",
+      "parametres_plantation": { "distance_inter_plants_cm": 15, "distance_inter_rangs_cm": 35 },
+      "rendement_et_recolte": { "jours_avant_maturite": 140 }
+    },
+    "poireau_hiver": {
+      "id_plante": "PLT-POI-05",
+      "nom_commun": "Poireau",
+      "famille_botanique": "Alliacées",
+      "etat_actuel": "en_terre",
+      "parametres_plantation": { "distance_inter_plants_cm": 12, "distance_inter_rangs_cm": 30 },
+      "rendement_et_recolte": { "jours_avant_maturite": 150 }
     }
-  }
+  },
+  "cultures_en_cours": [
+    { "id_parcelle": "ZONE-A-LIGNE-1", "id_plante": "PLT-RAD-03", "date_plantation": "2026-05-07", "dimensions_cm": { "longueur": 1000 } },
+    { "id_parcelle": "ZONE-A-LIGNE-2", "id_plante": "PLT-PAN-04", "date_plantation": "2026-05-07", "dimensions_cm": { "longueur": 1000 } },
+    { "id_parcelle": "ZONE-A-PLANCHE-1", "id_plante": "PLT-SAL-02", "date_plantation": "2026-05-07", "dimensions_cm": { "longueur": 1000 } },
+    { "id_parcelle": "ZONE-B-LIGNE-1", "id_plante": "PLT-POI-05", "date_plantation": "2026-05-07", "dimensions_cm": { "longueur": 1000 } }
+  ]
 }

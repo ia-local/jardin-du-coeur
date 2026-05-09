@@ -3,106 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les Jardins du Cœur - Accueil</title>
-    <!-- Lien vers votre CSS -->
+    <title>Les Jardins du Cœur - Accueil & Assistant IA</title>
     <link rel="stylesheet" href="css/style.css">
-    <!-- Icônes Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* --- Styles du Chatbot (Index Specifique) --- */
+        .c-floating-ai {
+            position: fixed; bottom: 90px; right: 20px; /* Rehaussé pour laisser la place au footer mobile */
+            width: 56px; height: 56px; border-radius: 50%;
+            background: var(--color-primary); color: white;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3); cursor: pointer; z-index: 999;
+            transition: transform 0.3s ease;
+        }
+        .c-floating-ai:hover { transform: scale(1.1); }
+
+        .c-modal-chat {
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.6);
+            align-items: center; justify-content: center; backdrop-filter: blur(4px);
+        }
+        .c-chat-window {
+            background: white; width: 95%; max-width: 450px; height: 80vh;
+            border-radius: 16px; display: flex; flex-direction: column;
+            overflow: hidden; box-shadow: var(--shadow-soft);
+        }
+        .c-chat-header { background: var(--color-primary); color: white; padding: 16px; display: flex; justify-content: space-between; align-items: center; }
+        .c-chat-messages { flex: 1; padding: 16px; overflow-y: auto; background: #f4f7f4; display: flex; flex-direction: column; gap: 12px; }
+        .c-bubble { padding: 10px 14px; border-radius: 18px; max-width: 85%; font-size: 0.9rem; line-height: 1.4; }
+        .c-bubble--ia { background: white; align-self: flex-start; color: var(--color-text-main); border-bottom-left-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .c-bubble--user { background: var(--color-primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+        .c-chat-input-area { padding: 12px; border-top: 1px solid #eee; display: flex; gap: 8px; background: white; }
+        .c-chat-input { flex: 1; border: 1px solid #ddd; padding: 10px 16px; border-radius: 24px; outline: none; font-size: 0.95rem; }
+
+        /* --- Styles du Slider --- */
+        .c-hero-slider { position: relative; width: 100%; height: 350px; border-radius: var(--border-radius); overflow: hidden; margin-bottom: 24px; }
+        .c-slider-container { width: 100%; height: 100%; position: relative; }
+        .c-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.8s ease; }
+        .c-slide.active { opacity: 1; }
+        .c-slide-img { width: 100%; height: 100%; object-fit: cover; }
+        .c-slide-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 30px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; }
+        .c-slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); color: white; border: none; padding: 12px; cursor: pointer; z-index: 10; border-radius: 50%; }
+        .c-slider-btn--prev { left: 15px; } .c-slider-btn--next { right: 15px; }
+
+        @media (max-width: 768px) {
+            .c-hero-slider { height: 250px; }
+            .c-floating-ai { bottom: 85px; right: 15px; width: 50px; height: 50px; }
+        }
+    </style>
 </head>
 <body class="l-app-layout">
 
-    <!-- Navigation Latérale (Sidebar) -->
+    <!-- Sidebar (Visible sur Desktop uniquement via CSS) -->
     <aside class="c-sidebar">
         <div class="c-sidebar__header">
             <span class="material-icons c-sidebar__logo-icon">eco</span>
             <h1 class="c-sidebar__title">Jardins du Cœur</h1>
         </div>
-
         <nav class="c-sidebar__nav">
             <ul class="c-nav-list">
-                <li class="c-nav-item">
-                    <a href="pages/dashboard.html" class="c-nav-link c-nav-link--active">
-                        <span class="material-icons">dashboard</span>
-                        Tableau de Bord
-                    </a>
-                </li>
-                <li class="c-nav-item">
-                    <a href="pages/plan-de-culture.html" class="c-nav-link">
-                        <span class="material-icons">view_in_ar</span>
-                        Plan de Culture 3D
-                    </a>
-                </li>
-                <li class="c-nav-item">
-                    <a href="pages/fiche-plante.html" class="c-nav-link">
-                        <span class="material-icons">local_florist</span>
-                        Suivi Plante
-                    </a>
-                </li>
-                <li class="c-nav-item">
-                    <a href="pages/cartographie.html" class="c-nav-link">
-                        <span class="material-icons">satellite</span>
-                        Cartographie
-                    </a>
-                </li>
-                <li class="c-nav-item">
-                    <a href="pages/calendrier.html" class="c-nav-link">
-                        <span class="material-icons">calendar_month</span>
-                        Calendrier & Semis
-                    </a>
-                </li>
-                <li class="c-nav-item">
-                    <a href="pages/assolement.html" class="c-nav-link">
-                        <span class="material-icons">autorenew</span>
-                        Assolement
-                    </a>
-                </li>
-                <li class="c-nav-item">
-                    <a href="pages/atelier.html" class="c-nav-link">
-                        <span class="material-icons">handyman</span>
-                        Ateliers & CVNU
-                    </a>
-                </li>
-                <li class="c-nav-item">
-                    <a href="pages/galery.html" class="c-nav-link">
-                        <span class="material-icons">photo_library</span>
-                        Galerie
-                    </a>
-                </li>
+                <li class="c-nav-item"><a href="pages/dashboard.html" class="c-nav-link c-nav-link--active"><span class="material-icons">dashboard</span> Tableau de Bord</a></li>
+                <li class="c-nav-item"><a href="pages/plan-de-culture.html" class="c-nav-link"><span class="material-icons">view_in_ar</span> Plan 3D</a></li>
+                <li class="c-nav-item"><a href="pages/fiche-plante.html" class="c-nav-link"><span class="material-icons">local_florist</span> Suivi</a></li>
+                <li class="c-nav-item"><a href="pages/cartographie.html" class="c-nav-link"><span class="material-icons">satellite</span> Cartographie</a></li>
+                <li class="c-nav-item"><a href="pages/calendrier.html" class="c-nav-link"><span class="material-icons">calendar_month</span> Calendrier</a></li>
+                <li class="c-nav-item"><a href="pages/assolement.html" class="c-nav-link"><span class="material-icons">autorenew</span> Assolement</a></li>
+                <li class="c-nav-item"><a href="pages/atelier.html" class="c-nav-link"><span class="material-icons">handyman</span> Ateliers</a></li>
+                <li class="c-nav-item"><a href="pages/galery.html" class="c-nav-link"><span class="material-icons">photo_library</span> Galerie</a></li>
             </ul>
         </nav>
-
-        <!-- Intégration CVNU (Bas de la sidebar) -->
         <div class="c-sidebar__footer c-user-widget">
-            <div class="c-user-widget__avatar">
-                <span class="material-icons">person</span>
-            </div>
+            <div class="c-user-widget__avatar"><span class="material-icons">person</span></div>
             <div class="c-user-widget__info">
                 <span class="c-user-widget__name">Bénévole JDC</span>
-                <span class="c-user-widget__points">Points: 120 UTM</span>
+                <span class="c-user-widget__points">120 UTM</span>
             </div>
         </div>
     </aside>
 
-    <!-- Zone de Contenu Principal -->
+    <!-- Contenu Principal -->
     <main class="l-main-content">
         <header class="c-topbar">
-            <h2>Vue d'ensemble</h2>
+            <h2>Portail Accueil</h2>
             <div class="c-topbar__actions">
-                <span class="c-badge c-badge--alert">2 actions urgentes</span>
+                <span class="c-badge c-badge--alert">2 alertes</span>
             </div>
         </header>
-        
+
         <section class="l-page-content">
-            <div class="c-card" style="text-align: center; padding: 40px;">
-                <span class="material-icons" style="font-size: 60px; color: var(--color-primary);">eco</span>
-                <h2 style="margin: 20px 0; color: var(--color-primary);">Bienvenue dans le portail des Jardins du Cœur</h2>
-                <p style="color: var(--color-text-muted); margin-bottom: 24px;">Utilisez le menu de gauche pour naviguer vers le tableau de bord, la cartographie de Bavent ou les ateliers.</p>
-                <a href="pages/dashboard.html" class="c-btn-action" style="text-decoration: none; display: inline-block;">Accéder au Tableau de Bord</a>
+            <!-- HERO SLIDER -->
+            <div class="c-hero-slider">
+                <div class="c-slider-container" id="hero-slider">
+                    <div class="c-slide active">
+                        <img src="data/galery/20260507_151136.jpg" alt="Préparation Serre" class="c-slide-img">
+                        <div class="c-slide-overlay">
+                            <h3>L'aventure commence à Bavent</h3>
+                            <p>Installation de la structure de serre - Mai 2026</p>
+                        </div>
+                    </div>
+                    <div class="c-slide">
+                        <img src="data/galery/20260507_174703.jpg" alt="Premiers Semis" class="c-slide-img">
+                        <div class="c-slide-overlay">
+                            <h3>Atelier Semis & Solidarité</h3>
+                            <p>Radis, Panais et Salades prennent racine.</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="c-slider-btn c-slider-btn--prev" onclick="moveSlide(-1)">&#10094;</button>
+                <button class="c-slider-btn c-slider-btn--next" onclick="moveSlide(1)">&#10095;</button>
+            </div>
+
+            <!-- Welcome Card -->
+            <div class="c-card" style="text-align: center; padding: 30px;">
+                <h2 style="color: var(--color-primary);">Bonjour Mickael</h2>
+                <p style="margin-bottom: 20px;">L'Oracle a analysé les plantations du 7 mai. Vous avez des actions à valider pour votre CVNU.</p>
+                <a href="pages/dashboard.html" class="c-btn-action" style="display: inline-block; text-decoration: none;">Ouvrir le Tableau de Bord</a>
             </div>
         </section>
+
+        <!-- FOOTER NAVIGATION (Mobile Only) -->
+        <footer class="c-mobile-nav">
+            <a href="pages/dashboard.html" class="c-mobile-nav__item active">
+                <span class="material-icons">dashboard</span>
+                <span>Home</span>
+            </a>
+            <a href="pages/plan-de-culture.html" class="c-mobile-nav__item">
+                <span class="material-icons">view_in_ar</span>
+                <span>Plan</span>
+            </a>
+            <a href="pages/atelier.html" class="c-mobile-nav__item">
+                <span class="material-icons">handyman</span>
+                <span>Ateliers</span>
+            </a>
+            <a href="pages/fiche-plante.html" class="c-mobile-nav__item">
+                <span class="material-icons">local_florist</span>
+                <span>Suivi</span>
+            </a>
+            <a href="pages/galery.html" class="c-mobile-nav__item">
+                <span class="material-icons">photo_library</span>
+                <span>Photos</span>
+            </a>
+        </footer>
     </main>
 
-    <!-- Lien vers le JS principal -->
+    <!-- FAB AI -->
+    <div class="c-floating-ai" onclick="openChat()">
+        <span class="material-icons">auto_awesome</span>
+    </div>
+
+    <!-- MODALE AI -->
+    <div id="aiModal" class="c-modal-chat">
+        <div class="c-chat-window">
+            <div class="c-chat-header">
+                <strong>L'Oracle du Cœur</strong>
+                <span class="material-icons" style="cursor:pointer;" onclick="closeChat()">close</span>
+            </div>
+            <div class="c-chat-messages" id="chat-flow">
+                <div class="c-bubble c-bubble--ia">Bonjour Mickael. J'analyse les lignes de 10m. Posez-moi vos questions.</div>
+            </div>
+            <div class="c-chat-input-area">
+                <input type="text" id="user-input" class="c-chat-input" placeholder="Conseil agronomique...">
+                <button class="c-btn-action" style="padding: 10px;" onclick="handleChat()">
+                    <span class="material-icons">send</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="js/script.js"></script>
+    <script>
+        // Slider Logic
+        let currentSlide = 0;
+        function moveSlide(n) {
+            const slides = document.querySelectorAll('.c-slide');
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        setInterval(() => moveSlide(1), 5000);
+
+        // Chat Logic
+        function openChat() { document.getElementById('aiModal').style.display = 'flex'; }
+        function closeChat() { document.getElementById('aiModal').style.display = 'none'; }
+        
+        async function handleChat() {
+            const input = document.getElementById('user-input');
+            const flow = document.getElementById('chat-flow');
+            if(!input.value) return;
+            flow.innerHTML += `<div class="c-bubble c-bubble--user">${input.value}</div>`;
+            const val = input.value; input.value = "";
+            flow.scrollTop = flow.scrollHeight;
+            
+            try {
+                const res = await fetch('/api/oracle', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({question: val})
+                });
+                const data = await res.json();
+                flow.innerHTML += `<div class="c-bubble c-bubble--ia">${data.reponse}</div>`;
+                flow.scrollTop = flow.scrollHeight;
+            } catch(e) {
+                flow.innerHTML += `<div class="c-bubble c-bubble--ia">Erreur de connexion avec l'Oracle.</div>`;
+            }
+        }
+    </script>
 </body>
 </html>

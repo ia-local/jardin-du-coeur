@@ -56,49 +56,92 @@
     <main class="l-main-content">
         <header class="c-topbar"><h2>Vue d'ensemble - Mai 2026</h2></header>
         
-        <section class="l-page-content">
-            <div class="c-dashboard-grid">
-                
-                <!-- Widget Météo (Bavent) -->
-                <div class="c-widget">
-                    <div class="c-widget-header">
-                        <h3 class="c-widget-title"><span class="material-icons">cloud</span> Météo Bavent</h3>
-                    </div>
-                    <div class="c-weather-box">
-                        <span class="material-icons" style="font-size: 40px; color: #1976D2;">water_drop</span>
-                        <div>
-                            <strong>Pluie prévue demain</strong>
-                            <p style="font-size: 0.9rem; color: var(--color-text-muted);">Idéal pour le repiquage des poireaux. Éviter l'arrosage ce soir.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Widget Urgences (Lié au JSON) -->
-                <div class="c-widget">
-                    <div class="c-widget-header">
-                        <h3 class="c-widget-title"><span class="material-icons" style="color: var(--color-secondary);">warning</span> Tâches urgentes</h3>
-                    </div>
-                    <ul class="c-task-list">
-                        <li><span class="material-icons" style="color: var(--color-secondary);">agriculture</span> <span>Récolte : Radis 18J (Parcelle X1)</span></li>
-                        <li><span class="material-icons" style="color: var(--color-primary);">water</span> <span>Arrosage : Serre semis (Critique)</span></li>
-                    </ul>
-                </div>
-
-                <!-- Widget Métriques CVNU -->
-                <div class="c-widget">
-                    <div class="c-widget-header">
-                        <h3 class="c-widget-title"><span class="material-icons">eco</span> Impact Global</h3>
-                    </div>
-                    <div>
-                        <div style="margin-bottom: 10px;"><span class="c-stat-big">15</span> Bénévoles actifs</div>
-                        <div><span class="c-stat-big" style="color: var(--color-secondary);">450</span> UTM générés</div>
-                    </div>
-                </div>
-
+<section class="l-page-content">
+    <div class="c-dashboard-grid">
+        
+        <!-- WIDGET 1 : ÉTAT DES CULTURES (Pleine Terre) -->
+        <div class="c-widget">
+            <div class="c-widget-header">
+                <h3 class="c-widget-title"><span class="material-icons">agriculture</span> Pleine Terre (250m²)</h3>
             </div>
-        </section>
+            <ul class="c-task-list">
+                <li>
+                    <span class="material-icons" style="color: var(--color-primary);">check_circle</span>
+                    <div>
+                        <strong>Radis & Panais :</strong> Semés le 07/05.
+                        <p style="font-size: 0.8rem; color: var(--color-text-muted);">Levée attendue des radis : demain (10/05).</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="material-icons" style="color: var(--color-primary);">check_circle</span>
+                    <div>
+                        <strong>Salades & Poireaux :</strong> Repiqués le 07/05.
+                        <p style="font-size: 0.8rem; color: var(--color-text-muted);">Surveiller l'enracinement.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- WIDGET 2 : ÉTAT PÉPINIÈRE (En Pots) -->
+        <div class="c-widget" style="border: 2px solid var(--color-secondary);">
+            <div class="c-widget-header">
+                <h3 class="c-widget-title" style="color: var(--color-secondary);"><span class="material-icons">inventory_2</span> Zone Pépinière</h3>
+            </div>
+            <div class="c-weather-box" style="background: rgba(216, 67, 21, 0.05); margin-bottom: 15px;">
+                <span class="material-icons" style="color: var(--color-secondary);">wb_sunny</span>
+                <div>
+                    <strong>Tomates Marmande (En pots)</strong>
+                    <p style="font-size: 0.85rem;">Phase d'endurcissement avant repiquage.</p>
+                </div>
+            </div>
+            <ul class="c-task-list">
+                <li style="border-left-color: var(--color-secondary);">
+                    <span class="material-icons" style="color: var(--color-secondary);">water_drop</span>
+                    <span><strong>Action :</strong> Arrosage matinal ciblé.</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- WIDGET 3 : PROCHAIN ATELIER (CVNU) -->
+        <div class="c-widget">
+            <div class="c-widget-header">
+                <h3 class="c-widget-title"><span class="material-icons">stars</span> Valorisation Bénévoles</h3>
+            </div>
+            <div style="text-align: center; padding: 10px;">
+                <p><strong>Atelier de la semaine :</strong></p>
+                <div style="background: #f0f0f0; padding: 10px; border-radius: 8px; margin: 10px 0;">
+                    Construction de tuteurs (Menuiserie)
+                </div>
+                <small>Compétences : Mesure, Découpe, Autonomie.</small>
+                <div class="c-cvnu-points" style="display: block; margin-top: 10px;">+ 50 UTM</div>
+            </div>
+        </div>
+
+    </div>
+</section>
     </main>
-    
+    <footer class="c-mobile-nav">
+    <a href="dashboard.html" class="c-mobile-nav__item">
+        <span class="material-icons">dashboard</span>
+        <span>Home</span>
+    </a>
+    <a href="plan-de-culture.html" class="c-mobile-nav__item">
+        <span class="material-icons">view_in_ar</span>
+        <span>Plan 3D</span>
+    </a>
+    <a href="fiche-plante.html" class="c-mobile-nav__item">
+        <span class="material-icons">local_florist</span>
+        <span>Suivi</span>
+    </a>
+    <a href="atelier.html" class="c-mobile-nav__item">
+        <span class="material-icons">handyman</span>
+        <span>Ateliers</span>
+    </a>
+    <a href="galery.html" class="c-mobile-nav__item">
+        <span class="material-icons">photo_library</span>
+        <span>Galerie</span>
+    </a>
+</footer>
     <!-- JS de base -->
     <script src="../js/script.js"></script>
 </body>

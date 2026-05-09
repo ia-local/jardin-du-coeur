@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Les Jardins du Cœur</title>
+    <!-- On remonte d'un dossier pour aller chercher le CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .c-contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .c-info-card {
+            background: white;
+            padding: 24px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .c-info-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .c-info-icon {
+            background: rgba(46, 125, 50, 0.1);
+            color: var(--color-primary);
+            padding: 10px;
+            border-radius: 50%;
+        }
+
+        .c-form-card {
+            background: white;
+            padding: 24px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-soft);
+        }
+
+        /* Adaptation spécifique pour le formulaire de contact */
+        .c-contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .c-contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        @media (max-width: 768px) {
+            .c-contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="l-app-layout">
+    
+    <!-- Navigation Latérale (Sidebar unifiée) -->
+    <aside class="c-sidebar">
+        <div class="c-sidebar__header">
+            <span class="material-icons c-sidebar__logo-icon">eco</span>
+            <h1 class="c-sidebar__title">Jardins du Cœur</h1>
+        </div>
+
+        <nav class="c-sidebar__nav">
+            <ul class="c-nav-list">
+                <li class="c-nav-item"><a href="dashboard.html" class="c-nav-link"><span class="material-icons">dashboard</span> Tableau de Bord</a></li>
+                <li class="c-nav-item"><a href="plan-de-culture.html" class="c-nav-link"><span class="material-icons">view_in_ar</span> Plan de Culture 3D</a></li>
+                <li class="c-nav-item"><a href="fiche-plante.html" class="c-nav-link"><span class="material-icons">local_florist</span> Suivi Plante</a></li>
+                <li class="c-nav-item"><a href="cartographie.html" class="c-nav-link"><span class="material-icons">satellite</span> Cartographie</a></li>
+                <li class="c-nav-item"><a href="calendrier.html" class="c-nav-link"><span class="material-icons">calendar_month</span> Calendrier & Semis</a></li>
+                <li class="c-nav-item"><a href="assolement.html" class="c-nav-link"><span class="material-icons">autorenew</span> Assolement</a></li>
+                <li class="c-nav-item"><a href="atelier.html" class="c-nav-link"><span class="material-icons">handyman</span> Ateliers & CVNU</a></li>
+                <li class="c-nav-item">
+                    <!-- On ajoute le lien contact dans la sidebar si nécessaire, sinon on reste sur Galerie -->
+                    <a href="galery.html" class="c-nav-link"><span class="material-icons">photo_library</span> Galerie</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="c-sidebar__footer c-user-widget">
+            <div class="c-user-widget__avatar"><span class="material-icons">person</span></div>
+            <div class="c-user-widget__info">
+                <span class="c-user-widget__name">Mickael</span>
+                <span class="c-user-widget__points">Points: 120 UTM</span>
+            </div>
+        </div>
+    </aside> 
+
+    <main class="l-main-content">
+        <header class="c-topbar">
+            <h2>Contact & Support</h2>
+            <div class="c-topbar__actions">
+                <span class="c-badge" style="background: var(--color-primary); color: white;">Bavent, Normandie</span>
+            </div>
+        </header>
+        
+        <section class="l-page-content">
+            <div class="c-contact-container">
+                
+                <!-- Colonne Gauche : Infos Pratiques -->
+                <div class="c-info-card">
+                    <h3 style="color: var(--color-primary); margin-bottom: 20px;">Rejoignez l'aventure</h3>
+                    <p style="margin-bottom: 24px; color: var(--text-muted);">Vous souhaitez devenir bénévole, proposer un atelier ou simplement venir voir l'évolution des 250m² ?</p>
+                    
+                    <div class="c-info-item">
+                        <span class="material-icons c-info-icon">location_on</span>
+                        <div>
+                            <strong>Adresse du Jardin</strong>
+                            <p>Proximité Bavent, 14860 Normandie</p>
+                        </div>
+                    </div>
+
+                    <div class="c-info-item">
+                        <span class="material-icons c-info-icon">person</span>
+                        <div>
+                            <strong>Responsable Projet</strong>
+                            <p>Valérie - Coordinatrice des Jardins</p>
+                        </div>
+                    </div>
+
+                    <div class="c-info-item">
+                        <span class="material-icons c-info-icon">send</span>
+                        <div>
+                            <strong>Telegram Bot</strong>
+                            <p>@JDC_Oracle_Bot (Actif)</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px; padding: 15px; background: rgba(216, 67, 21, 0.05); border-radius: 8px;">
+                        <p style="font-size: 0.85rem; color: var(--color-secondary);">
+                            <span class="material-icons" style="font-size: 16px; vertical-align: middle;">info</span>
+                            Pour toute urgence concernant l'arrosage en période de sécheresse, utilisez l'alerte sur le bot Telegram.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Colonne Droite : Formulaire -->
+                <div class="c-form-card">
+                    <h3 style="margin-bottom: 20px;">Envoyer un message</h3>
+                    <form id="contact-form" class="c-contact-form">
+                        <div class="c-form-group">
+                            <label for="name">Votre Nom / Prénom</label>
+                            <input type="text" id="name" name="name" class="c-input" placeholder="Mickael..." required>
+                        </div>
+                        
+                        <div class="c-form-group">
+                            <label for="email">Votre Email (Profil CVNU)</label>
+                            <input type="email" id="email" name="email" class="c-input" placeholder="votre@email.com" required>
+                        </div>
+
+                        <div class="c-form-group">
+                            <label for="subject">Objet</label>
+                            <select id="subject" name="subject" class="c-input">
+                                <option value="inscription">Inscription Atelier</option>
+                                <option value="technique">Problème Technique Web/IA</option>
+                                <option value="autre">Autre demande</option>
+                            </select>
+                        </div>
+
+                        <div class="c-form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" class="c-input" placeholder="Comment pouvons-nous vous aider ?"></textarea>
+                        </div>
+
+                        <button type="submit" class="c-btn-action" style="width: 100%;">Envoyer à Valérie</button>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+    </main>
+    <footer class="c-mobile-nav">
+    <a href="dashboard.html" class="c-mobile-nav__item">
+        <span class="material-icons">dashboard</span>
+        <span>Home</span>
+    </a>
+    <a href="plan-de-culture.html" class="c-mobile-nav__item">
+        <span class="material-icons">view_in_ar</span>
+        <span>Plan 3D</span>
+    </a>
+    <a href="fiche-plante.html" class="c-mobile-nav__item">
+        <span class="material-icons">local_florist</span>
+        <span>Suivi</span>
+    </a>
+    <a href="atelier.html" class="c-mobile-nav__item">
+        <span class="material-icons">handyman</span>
+        <span>Ateliers</span>
+    </a>
+    <a href="galery.html" class="c-mobile-nav__item">
+        <span class="material-icons">photo_library</span>
+        <span>Galerie</span>
+    </a>
+</footer>
+    <script src="../js/script.js"></script>
+    <script>
+        // Logique d'envoi du formulaire
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerText;
+            
+            btn.innerText = "Envoi en cours...";
+            btn.style.opacity = "0.7";
+
+            // Simulation d'envoi (peut être relié à votre server.js plus tard)
+            setTimeout(() => {
+                alert("Merci Mickael ! Votre message a été transmis à Valérie et une copie est disponible sur votre profil CVNU.");
+                btn.innerText = originalText;
+                btn.style.opacity = "1";
+                e.target.reset();
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

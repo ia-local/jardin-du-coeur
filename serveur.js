@@ -4,6 +4,8 @@ const path = require('path');
 const cors = require('cors');
 const fs = require('fs');
 const { Groq } = require('groq-sdk');
+const initTelegram = require('./routerTelegram');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,7 +21,7 @@ app.use(express.json());
 
 // Servir les fichiers statiques de l'interface Web (votre dossier 'docs')
 app.use(express.static(path.join(__dirname, 'docs')));
-
+const telegramManager = initTelegram(app);
 // Chargement en mémoire de votre base de données JSON pour la donner en contexte à l'IA
 let gardenData = "";
 try {
@@ -32,6 +34,13 @@ try {
 } catch (error) {
     console.error("Erreur lors du chargement de database.json :", error);
 }
+let chronoData = "";
+try {
+    const chronoPath = path.join(__dirname, 'chronologie.json');
+    if (fs.existsSync(chronoPath)) {
+        chronoData = `Historique du projet : ${fs.readFileSync(chronoPath, 'utf8')}`;
+    }
+} catch (e) { console.error("Erreur lecture chronologie"); }
 
 // ==========================================
 // DEFINITION DU CONTEXTE SYSTEME (L'Oracle)
@@ -40,7 +49,7 @@ const SYSTEM_PROMPT = `
 Tu es "l'Oracle Botanique et Social" du projet "Les Jardins du Cœur", initié par Valérie.
 CONTEXTE : Jardin solidaire de 250 m² à Bavent, Normandie (climat océanique). Objectif double : production maraîchère et réinsertion professionnelle. Les actions des bénévoles valident des compétences sur leur CVNU (Curriculum Vitae Numérique Universel) et génèrent des points (UTM).
 RÔLE : Conseiller sur les rotations de cultures, les dates de semis/récolte, et relier ces tâches agronomiques aux ateliers de réinsertion (ex: menuiserie, pépinière).
-TON : Pédagogue, bienveillant, et techniquement rigoureux.
+TON : Pédagogue, bienveillant, et techniquement rigoureux ${gardenData} ${chronoData} ....
 ${gardenData}
 `;
 
