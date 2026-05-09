@@ -3,112 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendrier - Jardins du Cœur</title>
-    <!-- On remonte d'un dossier pour aller chercher le CSS -->
+    <title>Calendrier de Saison - Jardins du Cœur</title>
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        .c-month-section { margin-bottom: 24px; }
-        .c-month-title { font-size: 1.2rem; color: var(--color-primary); border-bottom: 2px solid var(--color-primary); padding-bottom: 8px; margin-bottom: 16px; }
-        .c-task-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; background: white; border: 1px solid #eee; border-radius: 8px; margin-bottom: 8px; box-shadow: var(--shadow-soft); }
-        .c-task-tag { padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; color: white; }
-        .tag-semis { background-color: #D84315; } /* Orange */
-        .tag-recolte { background-color: #2E7D32; } /* Vert */
+        .c-month-section { margin-bottom: 30px; }
+        .c-month-title { 
+            font-size: 1.3rem; color: var(--color-primary); 
+            border-bottom: 2px solid var(--color-primary); 
+            padding-bottom: 8px; margin-bottom: 16px;
+            display: flex; justify-content: space-between;
+        }
+        .c-task-item { 
+            display: flex; align-items: center; justify-content: space-between; 
+            padding: 14px; background: white; border: 1px solid #eee; 
+            border-radius: 8px; margin-bottom: 10px; box-shadow: var(--shadow-soft); 
+        }
+        .c-task-tag { padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; color: white; text-transform: uppercase; }
+        
+        /* Codes couleurs par type d'atelier */
+        .tag-semis { background-color: #D84315; }      /* Orange : Création */
+        .tag-entretien { background-color: #1976D2; }  /* Bleu : Arrosage/Désherbage */
+        .tag-recolte { background-color: #2E7D32; }    /* Vert : Production */
+        .tag-cvnu { background-color: #6A1B9A; }       /* Violet : Valorisation */
+
+        .c-recurrence-hint { font-size: 0.8rem; color: var(--color-secondary); font-weight: bold; }
     </style>
 </head>
 <body class="l-app-layout">
     
-    <!-- Navigation Latérale (Sidebar) -->
     <aside class="c-sidebar">
-        <div class="c-sidebar__header">
-            <span class="material-icons c-sidebar__logo-icon">eco</span>
-            <h1 class="c-sidebar__title">Jardins du Cœur</h1>
-        </div>
-
         <nav class="c-sidebar__nav">
             <ul class="c-nav-list">
                 <li class="c-nav-item"><a href="dashboard.html" class="c-nav-link"><span class="material-icons">dashboard</span> Tableau de Bord</a></li>
-                <li class="c-nav-item"><a href="plan-de-culture.html" class="c-nav-link"><span class="material-icons">view_in_ar</span> Plan de Culture 3D</a></li>
-                <li class="c-nav-item"><a href="fiche-plante.html" class="c-nav-link"><span class="material-icons">local_florist</span> Suivi Plante</a></li>
-                <li class="c-nav-item"><a href="cartographie.html" class="c-nav-link"><span class="material-icons">satellite</span> Cartographie</a></li>
-                <li class="c-nav-item">
-                    <!-- Classe ACTIVE sur cette page -->
-                    <a href="calendrier.html" class="c-nav-link c-nav-link--active">
-                        <span class="material-icons">calendar_month</span> Calendrier & Semis
-                    </a>
-                </li>
-                <li class="c-nav-item"><a href="assolement.html" class="c-nav-link"><span class="material-icons">autorenew</span> Assolement</a></li>
-                <li class="c-nav-item"><a href="atelier.html" class="c-nav-link"><span class="material-icons">handyman</span> Ateliers & CVNU</a></li>
-                <li class="c-nav-item"><a href="galery.html" class="c-nav-link"><span class="material-icons">photo_library</span> Galerie</a></li>
-            </ul>
+                <li class="c-nav-item"><a href="calendrier.html" class="c-nav-link c-nav-link--active"><span class="material-icons">calendar_month</span> Calendrier</a></li>
+                </ul>
         </nav>
-
-        <div class="c-sidebar__footer c-user-widget">
-            <div class="c-user-widget__avatar"><span class="material-icons">person</span></div>
-            <div class="c-user-widget__info">
-                <span class="c-user-widget__name">Bénévole JDC</span>
-                <span class="c-user-widget__points">Points: 120 UTM</span>
-            </div>
-        </div>
     </aside> 
 
     <main class="l-main-content">
-        <header class="c-topbar"><h2>Calendrier de la Saison (Bavent)</h2></header>
+        <header class="c-topbar">
+            <h2>Planification Saisonnière 2026</h2>
+            <div class="c-recurrence-hint"><span class="material-icons" style="font-size:16px; vertical-align:middle;">sync</span> Arrosage : Lun/Mer/Ven | Désherbage : Samedi</div>
+        </header>
         
         <section class="l-page-content">
+
             <div class="c-month-section">
-                <h3 class="c-month-title">Avril 2026</h3>
+                <h3 class="c-month-title">Mai 2026 <span>Phase 1</span></h3>
                 <div class="c-task-item">
                     <div>
-                        <strong>Tomates Marmande (Parcelle X2-Z4)</strong>
-                        <p style="font-size: 0.9rem; color: var(--color-text-muted);">Transférer les plants de la pépinière vers la pleine terre.</p>
+                        <strong>Levée des Radis 18J (Ligne 1)</strong>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted);">Éclaircir les rangs à 3cm dès apparition des premières feuilles.</p>
                     </div>
-                    <span class="c-task-tag tag-semis">Repiquage</span>
+                    <span class="c-task-tag tag-entretien">Entretien</span>
                 </div>
                 <div class="c-task-item">
                     <div>
-                        <strong>Radis 18 Jours (Parcelle X1-Z1)</strong>
-                        <p style="font-size: 0.9rem; color: var(--color-text-muted);">Semis direct en ligne, éclaircir à 3cm.</p>
+                        <strong>Repiquage Tomates Marmande</strong>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted);">Transfert des pots vers la Zone A (Assolement Gourmandes).</p>
+                    </div>
+                    <span class="c-task-tag tag-semis">Plantation</span>
+                </div>
+                <div class="c-task-item">
+                    <div>
+                        <strong>Récolte Radis 18J</strong>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted);">Première production du cycle. Valorisation 50 UTM.</p>
+                    </div>
+                    <span class="c-task-tag tag-recolte">Récolte</span>
+                </div>
+            </div>
+
+            <div class="c-month-section">
+                <h3 class="c-month-title">Juin 2026 <span>Phase 2</span></h3>
+                <div class="c-task-item">
+                    <div>
+                        <strong>Taille et Tuteurage Tomates</strong>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted);">Atelier menuiserie : installation des tuteurs fabriqués.</p>
+                    </div>
+                    <span class="c-task-tag tag-entretien">Entretien</span>
+                </div>
+                <div class="c-task-item">
+                    <div>
+                        <strong>Récolte Batavia (Planche 1)</strong>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted);">Cultures semées le 07/05. Récolte estimée : 2kg/m².</p>
+                    </div>
+                    <span class="c-task-tag tag-recolte">Récolte</span>
+                </div>
+            </div>
+
+            <div class="c-month-section">
+                <h3 class="c-month-title">Juillet - Août 2026 <span>Maintenance</span></h3>
+                <div class="c-task-item">
+                    <div>
+                        <strong>Arrosage Canicule (Pépinière & Terre)</strong>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted);">Urgence active sur le Bot Telegram.</p>
+                    </div>
+                    <span class="c-task-tag tag-entretien">Arrosage</span>
+                </div>
+                <div class="c-task-item">
+                    <div>
+                        <strong>Récolte Tomates Marmande</strong>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted);">Pic de production. Validation des compétences CVNU récolte.</p>
+                    </div>
+                    <span class="c-task-tag tag-recolte">Récolte</span>
+                </div>
+            </div>
+
+            <div class="c-month-section">
+                <h3 class="c-month-title">Sept. - Oct. 2026 <span>Clôture</span></h3>
+                <div class="c-task-item">
+                    <div>
+                        <strong>Récolte Panais & Poireaux</strong>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted);">Légumes racines profonds semés en mai.</p>
+                    </div>
+                    <span class="c-task-tag tag-recolte">Récolte</span>
+                </div>
+                <div class="c-task-item">
+                    <div>
+                        <strong>Semis Engrais Verts (Moutarde)</strong>
+                        <p style="font-size: 0.85rem; color: var(--color-text-muted);">Préparation de l'assolement Année 2.</p>
                     </div>
                     <span class="c-task-tag tag-semis">Semis</span>
                 </div>
             </div>
 
-            <div class="c-month-section">
-                <h3 class="c-month-title">Mai 2026</h3>
-                <div class="c-task-item">
-                    <div>
-                        <strong>Radis 18 Jours (Parcelle X1-Z1)</strong>
-                        <p style="font-size: 0.9rem; color: var(--color-text-muted);">Maturité atteinte, récolte estimée à 2kg.</p>
-                    </div>
-                    <span class="c-task-tag tag-recolte">Récolte</span>
-                </div>
-            </div>
         </section>
+
+        <footer class="c-mobile-nav">
+            <a href="dashboard.html" class="c-mobile-nav__item">
+                <span class="material-icons">dashboard</span><span>Home</span>
+            </a>
+            <a href="plan-de-culture.html" class="c-mobile-nav__item">
+                <span class="material-icons">view_in_ar</span><span>Plan</span>
+            </a>
+            <a href="fiche-plante.html" class="c-mobile-nav__item active">
+                <span class="material-icons">local_florist</span><span>Suivi</span>
+            </a>
+            <a href="atelier.html" class="c-mobile-nav__item">
+                <span class="material-icons">handyman</span><span>Ateliers</span>
+            </a>
+            <a href="galery.html" class="c-mobile-nav__item">
+                <span class="material-icons">photo_library</span><span>Galerie</span>
+            </a>
+        </footer>
     </main>
-    <footer class="c-mobile-nav">
-    <a href="dashboard.html" class="c-mobile-nav__item">
-        <span class="material-icons">dashboard</span>
-        <span>Home</span>
-    </a>
-    <a href="plan-de-culture.html" class="c-mobile-nav__item">
-        <span class="material-icons">view_in_ar</span>
-        <span>Plan 3D</span>
-    </a>
-    <a href="fiche-plante.html" class="c-mobile-nav__item">
-        <span class="material-icons">local_florist</span>
-        <span>Suivi</span>
-    </a>
-    <a href="atelier.html" class="c-mobile-nav__item">
-        <span class="material-icons">handyman</span>
-        <span>Ateliers</span>
-    </a>
-    <a href="galery.html" class="c-mobile-nav__item">
-        <span class="material-icons">photo_library</span>
-        <span>Galerie</span>
-    </a>
-</footer>
-    <!-- JS de base -->
     <script src="../js/script.js"></script>
 </body>
 </html>

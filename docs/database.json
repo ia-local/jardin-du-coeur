@@ -78,5 +78,14 @@
     { "id_parcelle": "ZONE-A-LIGNE-2", "id_plante": "PLT-PAN-04", "date_plantation": "2026-05-07", "dimensions_cm": { "longueur": 1000 } },
     { "id_parcelle": "ZONE-A-PLANCHE-1", "id_plante": "PLT-SAL-02", "date_plantation": "2026-05-07", "dimensions_cm": { "longueur": 1000 } },
     { "id_parcelle": "ZONE-B-LIGNE-1", "id_plante": "PLT-POI-05", "date_plantation": "2026-05-07", "dimensions_cm": { "longueur": 1000 } }
-  ]
+  ],
+
+  "ateliers_catalogue": {
+    "ATL-ARR": { "titre": "Arrosage & Hydratation", "description": "Gestion de l'eau et suivi de l'humidité des parcelles.", "utm": 15, "icon": "water_drop" },
+    "ATL-DES": { "titre": "Désherbage Sélectif", "description": "Entretien des lignes de 10m et protection des cultures.", "utm": 20, "icon": "grass" },
+    "ATL-SEM": { "titre": "Atelier Semis", "description": "Préparation des godets et mise en terre des graines.", "utm": 30, "icon": "Psychology" },
+    "ATL-PLA": { "titre": "Plantation & Repiquage", "description": "Transfert de la pépinière vers la pleine terre.", "utm": 40, "icon": "agriculture" },
+    "ATL-REC": { "titre": "Récolte & Tri", "description": "Cueillette, pesée et préparation pour la distribution.", "utm": 25, "icon": "shopping_basket" }
+  },
+  "inscriptions_ateliers": []
 }
