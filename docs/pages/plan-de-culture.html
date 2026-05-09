@@ -5,126 +5,137 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plan de Culture 3D - Les Jardins du Cœur</title>
     
-    <!-- CSS de l'application -->
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <style>
+        /* LAYOUT DESKTOP PAR DÉFAUT */
         .c-3d-panel {
             display: grid;
             grid-template-columns: 1fr 320px;
             gap: 24px;
             height: calc(100vh - 120px);
         }
+
         #canvas-container {
             width: 100%; height: 100%; border-radius: var(--border-radius);
             box-shadow: var(--shadow-soft); overflow: hidden;
             background-color: #87CEEB; position: relative;
         }
+
         .c-parcel-info {
             background: white; padding: 24px; border-radius: var(--border-radius);
             box-shadow: var(--shadow-soft); display: flex; flex-direction: column;
         }
+
         .c-parcel-info h3 { color: var(--color-primary); margin-bottom: 16px; }
         .c-data-row { margin-bottom: 12px; font-size: 0.95rem; }
         .c-data-row span { font-weight: 600; color: var(--color-text-main); }
+
         .c-btn-action {
             margin-top: auto; background-color: var(--color-secondary);
             color: white; border: none; padding: 12px; border-radius: 8px;
             font-weight: bold; cursor: pointer; transition: opacity 0.3s;
         }
-        .c-btn-action:hover { opacity: 0.9; }
+
         .c-3d-overlay {
             position: absolute; bottom: 16px; left: 16px;
             background: rgba(255,255,255,0.8); padding: 8px 12px;
             border-radius: 8px; font-size: 0.85rem; pointer-events: none;
         }
+
+        /* --- ADAPTATION MOBILE-FIRST --- */
+        @media (max-width: 768px) {
+            .c-3d-panel {
+                grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+                height: auto;
+                gap: 16px;
+            }
+
+            #canvas-container {
+                height: 400px; /* Hauteur fixe pour le rendu 3D sur mobile */
+            }
+
+            .c-parcel-info {
+                margin-bottom: 20px; /* Espace pour le scroll */
+            }
+
+            .c-3d-overlay {
+                font-size: 0.75rem;
+                bottom: 10px;
+                left: 10px;
+            }
+        }
     </style>
 </head>
 <body class="l-app-layout">
 
-    <!-- Navigation Latérale (Sidebar) Unifiée -->
     <aside class="c-sidebar">
         <div class="c-sidebar__header">
             <span class="material-icons c-sidebar__logo-icon">eco</span>
             <h1 class="c-sidebar__title">Jardins du Cœur</h1>
         </div>
-
         <nav class="c-sidebar__nav">
             <ul class="c-nav-list">
                 <li class="c-nav-item"><a href="dashboard.html" class="c-nav-link"><span class="material-icons">dashboard</span> Tableau de Bord</a></li>
-                <li class="c-nav-item">
-                    <!-- Classe ACTIVE sur cette page -->
-                    <a href="plan-de-culture.html" class="c-nav-link c-nav-link--active">
-                        <span class="material-icons">view_in_ar</span> Plan de Culture 3D
-                    </a>
-                </li>
+                <li class="c-nav-item"><a href="plan-de-culture.html" class="c-nav-link c-nav-link--active"><span class="material-icons">view_in_ar</span> Plan de Culture 3D</a></li>
                 <li class="c-nav-item"><a href="fiche-plante.html" class="c-nav-link"><span class="material-icons">local_florist</span> Suivi Plante</a></li>
                 <li class="c-nav-item"><a href="cartographie.html" class="c-nav-link"><span class="material-icons">satellite</span> Cartographie</a></li>
-                <li class="c-nav-item"><a href="calendrier.html" class="c-nav-link"><span class="material-icons">calendar_month</span> Calendrier & Semis</a></li>
+                <li class="c-nav-item"><a href="calendrier.html" class="c-nav-link"><span class="material-icons">calendar_month</span> Calendrier</a></li>
                 <li class="c-nav-item"><a href="assolement.html" class="c-nav-link"><span class="material-icons">autorenew</span> Assolement</a></li>
-                <li class="c-nav-item"><a href="atelier.html" class="c-nav-link"><span class="material-icons">handyman</span> Ateliers & CVNU</a></li>
+                <li class="c-nav-item"><a href="atelier.html" class="c-nav-link"><span class="material-icons">handyman</span> Ateliers</a></li>
                 <li class="c-nav-item"><a href="galery.html" class="c-nav-link"><span class="material-icons">photo_library</span> Galerie</a></li>
             </ul>
         </nav>
-
-        <div class="c-sidebar__footer c-user-widget">
-            <div class="c-user-widget__avatar"><span class="material-icons">person</span></div>
-            <div class="c-user-widget__info">
-                <span class="c-user-widget__name">Bénévole JDC</span>
-                <span class="c-user-widget__points">Points: 120 UTM</span>
-            </div>
-        </div>
     </aside>
 
-    <!-- Contenu Principal -->
     <main class="l-main-content">
         <header class="c-topbar">
-            <h2>Jumeau Numérique - Vue détaillée</h2>
+            <h2>Jumeau Numérique</h2>
             <span class="c-badge c-badge--alert">Interaction Active</span>
         </header>
         
         <section class="l-page-content c-3d-panel">
             <div id="canvas-container">
-                <div class="c-3d-overlay">Clic gauche: Sélectionner | Clic droit/Molette: Pivoter/Zoomer</div>
+                <div class="c-3d-overlay">Toucher: Sélection | Glisser: Rotation</div>
             </div>
 
             <aside class="c-parcel-info">
                 <h3>Parcelle <span id="ui-parcel-id">---</span></h3>
                 <div class="c-data-row">Surface : <span>1 m²</span></div>
-                <div class="c-data-row">État du sol : <span id="ui-sol">Terre vierge</span></div>
+                <div class="c-data-row">État : <span id="ui-sol">Terre vierge</span></div>
                 <hr style="margin: 15px 0; border: 0; border-top: 1px solid #eee;">
                 
-                <h4 style="margin-bottom: 10px;">Culture actuelle</h4>
+                <h4 style="margin-bottom: 10px;">Culture active</h4>
                 <div class="c-data-row">Plante : <span id="ui-plante">Aucune</span></div>
                 <div class="c-data-row">Planté le : <span id="ui-date">--/--/----</span></div>
                 
-                <button class="c-btn-action" onclick="planterTomate()">+ Planter Tomates Marmande</button>
+                <button class="c-btn-action" onclick="planterTomate()">+ Action Culture</button>
             </aside>
         </section>
+
+        <footer class="c-mobile-nav">
+            <a href="dashboard.html" class="c-mobile-nav__item">
+                <span class="material-icons">dashboard</span><span>Home</span>
+            </a>
+            <a href="plan-de-culture.html" class="c-mobile-nav__item active">
+                <span class="material-icons">view_in_ar</span><span>Plan 3D</span>
+            </a>
+            <a href="fiche-plante.html" class="c-mobile-nav__item">
+                <span class="material-icons">local_florist</span><span>Suivi</span>
+            </a>
+            <a href="atelier.html" class="c-mobile-nav__item">
+                <span class="material-icons">handyman</span><span>Ateliers</span>
+            </a>
+            <a href="galery.html" class="c-mobile-nav__item">
+                <span class="material-icons">photo_library</span><span>Galerie</span>
+            </a>
+        </footer>
     </main>
-    <footer class="c-mobile-nav">
-    <a href="dashboard.html" class="c-mobile-nav__item">
-        <span class="material-icons">dashboard</span>
-        <span>Home</span>
-    </a>
-    <a href="plan-de-culture.html" class="c-mobile-nav__item">
-        <span class="material-icons">view_in_ar</span>
-        <span>Plan 3D</span>
-    </a>
-    <a href="fiche-plante.html" class="c-mobile-nav__item">
-        <span class="material-icons">local_florist</span>
-        <span>Suivi</span>
-    </a>
-    <a href="atelier.html" class="c-mobile-nav__item">
-        <span class="material-icons">handyman</span>
-        <span>Ateliers</span>
-    </a>
-    <a href="galery.html" class="c-mobile-nav__item">
-        <span class="material-icons">photo_library</span>
-        <span>Galerie</span>
-    </a>
-</footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="../js/script.js"></script>
     <!-- Import de Three.js et OrbitControls -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
