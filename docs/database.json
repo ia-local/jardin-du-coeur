@@ -1,0 +1,73 @@
+{
+  "fiche_technique_plantes": {
+    "tomate_marmande": {
+      "id_plante": "PLT-TOM-01",
+      "nom_commun": "Tomate Marmande",
+      "famille_botanique": "Solanacées",
+      "exigences_sol": ["riche", "drainant", "amendé_compost"],
+      
+      "parametres_plantation": {
+        "distance_inter_plants_cm": 50,
+        "distance_inter_rangs_cm": 80,
+        "densite_m2_recommandee": 2.5,
+        "profondeur_travail_sol_cm": 30
+      },
+      
+      "cycle_obtention": {
+        "methode_principale": "semis_pepiniere",
+        "alternatives": ["achat_plant", "bouturage_gourmand"],
+        "duree_levee_jours": 8,
+        "duree_avant_repiquage_semaines": 6,
+        "atelier_cvnu_associe": "AT-JAR-SEMIS-01"
+      },
+      
+      "calcul_charge_travail": {
+        "preparation_sol_min_par_m2": 20,
+        "temps_plantation_min_par_plant": 3,
+        "entretien_hebdo_min_par_m2": 10, 
+        "observations_entretien": "Tuteurage, taille des gourmands, arrosage au pied"
+      },
+      
+      "rendement_et_recolte": {
+        "jours_avant_maturite": 75,
+        "rendement_estime_kg_par_m2": 4.5,
+        "atelier_cvnu_associe": "AT-JAR-REC-01"
+      }
+    },
+
+    "salade_batavia": {
+      "id_plante": "PLT-SAL-02",
+      "nom_commun": "Batavia",
+      "famille_botanique": "Astéracées",
+      "exigences_sol": ["frais", "humifère"],
+      
+      "parametres_plantation": {
+        "distance_inter_plants_cm": 30,
+        "distance_inter_rangs_cm": 30,
+        "densite_m2_recommandee": 11,
+        "profondeur_travail_sol_cm": 15
+      },
+      
+      "cycle_obtention": {
+        "methode_principale": "semis_caissette",
+        "alternatives": ["semis_pleine_terre"],
+        "duree_levee_jours": 5,
+        "duree_avant_repiquage_semaines": 4,
+        "atelier_cvnu_associe": "AT-JAR-SEMIS-02"
+      },
+      
+      "calcul_charge_travail": {
+        "preparation_sol_min_par_m2": 10,
+        "temps_plantation_min_par_plant": 1.5,
+        "entretien_hebdo_min_par_m2": 5,
+        "observations_entretien": "Désherbage manuel, surveillance limaces"
+      },
+      
+      "rendement_et_recolte": {
+        "jours_avant_maturite": 50,
+        "rendement_estime_kg_par_m2": 2.0,
+        "atelier_cvnu_associe": "AT-JAR-REC-02"
+      }
+    }
+  }
+}

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Culture 3D - Les Jardins du Cœur</title>
+    
+    <!-- CSS de l'application -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <style>
+        .c-3d-panel {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 24px;
+            height: calc(100vh - 120px); /* Ajustement pour prendre tout l'écran sous le header */
+        }
+
+        /* Conteneur pour le rendu 3D */
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+            background-color: #87CEEB; /* Couleur ciel par défaut */
+            position: relative;
+        }
+
+        /* Panneau de contrôle latéral */
+        .c-parcel-info {
+            background: white;
+            padding: 24px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .c-parcel-info h3 { color: var(--color-primary); margin-bottom: 16px; }
+        .c-data-row { margin-bottom: 12px; font-size: 0.95rem; }
+        .c-data-row span { font-weight: 600; color: var(--color-text-main); }
+        
+        .c-btn-action {
+            margin-top: auto;
+            background-color: var(--color-secondary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .c-btn-action:hover { opacity: 0.9; }
+
+        /* Petit overlay explicatif sur la 3D */
+        .c-3d-overlay {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            background: rgba(255,255,255,0.8);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            pointer-events: none; /* Laisse passer les clics vers le canvas */
+        }
+    </style>
+</head>
+<body class="l-app-layout">
+
+    <!-- Navigation Latérale (Sidebar) -->
+    <aside class="c-sidebar">
+        <div class="c-sidebar__header">
+            <span class="material-icons c-sidebar__logo-icon">eco</span>
+            <h1 class="c-sidebar__title">Jardins du Cœur</h1>
+        </div>
+        <nav class="c-sidebar__nav">
+            <ul class="c-nav-list">
+                <li class="c-nav-item"><a href="dashboard.html" class="c-nav-link"><span class="material-icons">dashboard</span> Tableau de Bord</a></li>
+                <li class="c-nav-item"><a href="cartographie.html" class="c-nav-link"><span class="material-icons">map</span> Vue Aérienne</a></li>
+                <li class="c-nav-item"><a href="plan-de-culture.html" class="c-nav-link c-nav-link--active"><span class="material-icons">view_in_ar</span> Plan de Culture 3D</a></li>
+                <li class="c-nav-item"><a href="calendrier.html" class="c-nav-link"><span class="material-icons">calendar_month</span> Calendrier</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Contenu Principal -->
+    <main class="l-main-content">
+        <header class="c-topbar">
+            <h2>Jumeau Numérique - Vue détaillée</h2>
+            <span class="c-badge c-badge--alert">Interaction Active</span>
+        </header>
+        
+        <section class="l-page-content c-3d-panel">
+            
+            <!-- Zone 3D -->
+            <div id="canvas-container">
+                <div class="c-3d-overlay">Clic gauche: Sélectionner | Clic droit/Molette: Pivoter/Zoomer</div>
+            </div>
+
+            <!-- UI Latérale liée à la parcelle sélectionnée -->
+            <aside class="c-parcel-info">
+                <h3>Parcelle <span id="ui-parcel-id">---</span></h3>
+                <div class="c-data-row">Surface : <span>1 m²</span></div>
+                <div class="c-data-row">État du sol : <span id="ui-sol">Terre vierge</span></div>
+                <hr style="margin: 15px 0; border: 0; border-top: 1px solid #eee;">
+                
+                <h4 style="margin-bottom: 10px;">Culture actuelle</h4>
+                <div class="c-data-row">Plante : <span id="ui-plante">Aucune</span></div>
+                <div class="c-data-row">Planté le : <span id="ui-date">--/--/----</span></div>
+                
+                <button class="c-btn-action" onclick="planterTomate()">+ Planter Tomates Marmande</button>
+            </aside>
+        </section>
+    </main>
+
+    <!-- Import de Three.js et OrbitControls -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <!-- Logique du Jumeau Numérique -->
+    <script>
+        // 1. Initialisation de base (Scène, Caméra, Rendu)
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x87CEEB); // Ciel bleu
+
+        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.set(12, 15, 20); // Positionnement de la caméra en biais
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.shadowMap.enabled = true; // Activer les ombres
+        container.appendChild(renderer.domElement);
+
+        // Contrôles pour tourner autour du jardin
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.target.set(12.5, 0, 5); // Cibler le centre du terrain (25x10)
+        controls.update();
+
+        // 2. Éclairage
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight.position.set(10, 20, 10);
+        dirLight.castShadow = true;
+        scene.add(dirLight);
+
+        // 3. Création du terrain (250m² -> grille de 25m x 10m)
+        const colonnes = 25; // Longueur
+        const lignes = 10;   // Largeur
+        const parcelles = []; // Tableau pour stocker nos carrés de terre
+
+        // Matériaux de base
+        const materialTerre = new THREE.MeshLambertMaterial({ color: 0x5C4033 }); // Marron
+        const materialPlante = new THREE.MeshLambertMaterial({ color: 0x2E7D32 }); // Vert
+        const materialSelect = new THREE.MeshLambertMaterial({ color: 0xD84315 }); // Orange (Sélection)
+
+        const geometryPlane = new THREE.BoxGeometry(0.95, 0.2, 0.95); // Petit espace (0.05) entre les cases
+
+        for (let x = 0; x < colonnes; x++) {
+            for (let z = 0; z < lignes; z++) {
+                const mesh = new THREE.Mesh(geometryPlane, materialTerre.clone());
+                mesh.position.set(x + 0.5, 0, z + 0.5);
+                mesh.receiveShadow = true;
+                
+                // On attache des données "métier" directement à l'objet 3D
+                mesh.userData = {
+                    id: `X${x}-Z${z}`,
+                    sol: "Terre argileuse",
+                    plante: null,
+                    datePlantation: null
+                };
+                
+                scene.add(mesh);
+                parcelles.push(mesh);
+            }
+        }
+
+        // 4. Interaction (Raycaster pour le clic)
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        let parcelleActive = null;
+
+        container.addEventListener('pointerdown', onPointerDown);
+
+        function onPointerDown(event) {
+            // Calculer la position de la souris
+            const rect = renderer.domElement.getBoundingClientRect();
+            mouse.x = ( (event.clientX - rect.left) / rect.width ) * 2 - 1;
+            mouse.y = - ( (event.clientY - rect.top) / rect.height ) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+
+            // Vérifier les intersections avec nos parcelles
+            const intersects = raycaster.intersectObjects(parcelles);
+
+            if (intersects.length > 0) {
+                // Remettre l'ancienne parcelle en marron (si elle n'a pas de plante)
+                if (parcelleActive && !parcelleActive.userData.plante) {
+                    parcelleActive.material.color.setHex(0x5C4033);
+                } else if (parcelleActive && parcelleActive.userData.plante) {
+                    parcelleActive.material.color.setHex(0x2E7D32);
+                }
+
+                parcelleActive = intersects[0].object;
+                
+                // Mettre la nouvelle en surbrillance (Orange)
+                parcelleActive.material.color.setHex(0xD84315);
+
+                // Mettre à jour l'interface HTML
+                document.getElementById('ui-parcel-id').innerText = parcelleActive.userData.id;
+                document.getElementById('ui-sol').innerText = parcelleActive.userData.sol;
+                document.getElementById('ui-plante').innerText = parcelleActive.userData.plante || "Aucune";
+                document.getElementById('ui-date').innerText = parcelleActive.userData.datePlantation || "--/--/----";
+            }
+        }
+
+        // 5. Action de plantation depuis l'UI
+        window.planterTomate = function() {
+            if (!parcelleActive) {
+                alert("Veuillez sélectionner une parcelle en 3D d'abord !");
+                return;
+            }
+            // Mettre à jour les données de la parcelle
+            parcelleActive.userData.plante = "Tomate Marmande";
+            parcelleActive.userData.datePlantation = new Date().toLocaleDateString('fr-FR');
+            
+            // Ajouter un petit modèle 3D dessus (un cylindre vert pour symboliser le plant)
+            const plantGeo = new THREE.CylinderGeometry(0.1, 0.1, 0.8, 8);
+            const plantMesh = new THREE.Mesh(plantGeo, materialPlante);
+            plantMesh.position.set(parcelleActive.position.x, 0.5, parcelleActive.position.z);
+            plantMesh.castShadow = true;
+            scene.add(plantMesh);
+
+            // Mettre à jour l'UI
+            document.getElementById('ui-plante').innerText = parcelleActive.userData.plante;
+            document.getElementById('ui-date').innerText = parcelleActive.userData.datePlantation;
+            
+            // Simuler l'appel à votre backend/CVNU
+            console.log(`📡 [Backend] Enregistrement JSON : Plantation sur ${parcelleActive.userData.id}`);
+            console.log(`🔗 [CVNU] Génération de 5 UTM pour la plantation.`);
+        };
+
+        // 6. Boucle d'animation (Rendu continu)
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Gestion du redimensionnement de la fenêtre
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+    </script>
+</body>
+</html>
