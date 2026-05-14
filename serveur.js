@@ -41,7 +41,70 @@ try {
         chronoData = `Historique du projet : ${fs.readFileSync(chronoPath, 'utf8')}`;
     }
 } catch (e) { console.error("Erreur lecture chronologie"); }
+// --- serveur.js (Extrait des nouvelles routes) ---
 
+/**
+ * MOTEUR D'INCARNATION ET DE GUIDE
+ * @param {string} mode - 'guide' (technique) ou 'incarnate' (JE)
+ */
+async function generatePlantResponse(mode, plantName, question = "") {
+    const isIncarnate = mode === 'incarnate';
+    
+    // Contexte extrait de vos fichiers (ex: espacement 50cm pour tomates)
+    const systemPrompt = `
+        Tu es l'âme de la plante "${plantName}" située dans les Jardins du Cœur à Bavent.
+        ${isIncarnate ? 'PARLE IMPÉRATIVEMENT À LA PREMIÈRE PERSONNE (JE).' : 'Réponds comme un expert botaniste.'}
+        
+        CONTEXTE TECHNIQUE :
+        - Localisation : Normandie (climat humide, 14860).
+        - Données de culture : ${gardenData}.
+        - Historique récent : ${chronoData}.
+        
+        INSTRUCTIONS :
+        - Si JE : Sois poétique, décris tes racines et ton besoin d'eau ou de soleil.
+        - Si GUIDE : Donne l'espacement exact (ex: 50cm pour tomates), la densité et les compagnons.
+        - Ton : Bienveillant et aligné sur les valeurs de Valérie.
+    `;
+
+    const chatCompletion = await groq.chat.completions.create({
+        messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: question || (isIncarnate ? "Comment te sens-tu aujourd'hui ?" : `Génère mon guide de culture complet.`) }
+        ],
+        model: "llama-3.1-8b-instant",
+        temperature: isIncarnate ? 0.7 : 0.3,
+    });
+
+    return chatCompletion.choices[0].message.content;
+}
+
+// Endpoint spécifique pour le Codex
+app.post('/api/codex/plant', async (req, res) => {
+    const { plant, mode, question } = req.body;
+    try {
+        const reponse = await generatePlantResponse(mode, plant, question);
+        res.json({ success: true, reponse });
+    } catch (error) {
+        res.status(500).json({ error: "Erreur du Codex." });
+    }
+});
+// --- serveur.js ---
+const SOUP_PATH = path.join(__dirname, 'docs/data/soup.md');
+
+// Route pour enregistrer la conversation et les "AGI Thoughts"
+app.post('/api/sync-soup', (req, res) => {
+    const { content, sessionID, type } = req.body;
+    const timestamp = new Date().toISOString();
+    
+    const logEntry = `\n\n### [${timestamp}] - Session: ${sessionID} - Type: ${type}\n${content}`;
+
+    try {
+        fs.appendFileSync(SOUP_PATH, logEntry, 'utf8');
+        res.json({ success: true, message: "Mémoire synchronisée dans soup.md" });
+    } catch (err) {
+        res.status(500).json({ error: "Échec de l'écriture mémoire" });
+    }
+});
 // ==========================================
 // DEFINITION DU CONTEXTE SYSTEME (L'Oracle)
 // ==========================================

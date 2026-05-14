@@ -2,6 +2,9 @@
   "historique": [
     { "date": "2026-05-04", "type": "fondation", "titre": "Acquisition & Installation", "desc": "Prise de possession des 250m², installation de la cabane et des outils." },
     { "date": "2026-05-05", "type": "sol", "titre": "Préparation du sol", "desc": "Terre retournée sur l'ensemble de la parcelle." },
-    { "date": "2026-05-07", "type": "culture", "titre": "Plantations Initiales", "desc": "Semis des Radis, Panais, Poireaux et Salades à l'opposé de la cabane." }
+    { "date": "2026-05-07", "type": "culture", "titre": "Plantations Initiales", "desc": "Semis des Radis, Panais, Poireaux et Salades à l'opposé de la cabane." },
+    { "date": "2026-05-12", "type": "travail", "titre": "Maintenance & Préparation", "desc": "Suivi des levées et préparation des zones de plantation.", "icon": "engineering" },
+    { "date": "2026-05-15", "type": "production", "titre": "Grande Plantation", "desc": "Mise en terre : Pommes de terre, Courges. Semis : Salades. Préparation planche Oignons.", "icon": "add_task" },
+    { "date": "2026-05-15", "type": "menuiserie", "titre": "Atelier Palettes", "desc": "Construction des box et pots en bois de récup. Montage du plan de travail pour bouturage.", "icon": "handyman" }
   ]
 }
