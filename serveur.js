@@ -78,19 +78,33 @@ async function generatePlantResponse(mode, plantName, question = "") {
     return chatCompletion.choices[0].message.content;
 }
 
-// Endpoint spécifique pour le Codex
-app.post('/api/codex/plant', async (req, res) => {
-    const { plant, mode, question } = req.body;
-    try {
-        const reponse = await generatePlantResponse(mode, plant, question);
-        res.json({ success: true, reponse });
-    } catch (error) {
-        res.status(500).json({ error: "Erreur du Codex." });
-    }
-});
-// --- serveur.js ---
-const SOUP_PATH = path.join(__dirname, 'docs/data/soup.md');
 
+// --- serveur.js ---
+const SOUP_PATH = path.join(__dirname, 'data/soup.md');
+// --- serveur.js (Incrémentation) ---
+
+app.get('/api/galery', (req, res) => {
+    const dirPath = path.join(__dirname, 'docs/pages/galery');
+    
+    fs.readdir(dirPath, (err, files) => {
+        if (err) return res.status(500).json({ error: "Dossier galery introuvable" });
+        
+        // On filtre pour ne garder que les images
+        const images = files
+            .filter(file => file.match(/\.(jpg|jpeg|png|gif)$/i))
+            .map(file => {
+                const stats = fs.statSync(path.join(dirPath, file));
+                return {
+                    url: `docs/pages/galery/${file}`,
+                    name: file.startsWith('tg_') ? "Photo du Terrain (Telegram)" : file,
+                    date: stats.mtime.toLocaleDateString('fr-FR')
+                };
+            })
+            .sort((a, b) => b.date - a.date); // Plus récentes d'abord
+
+        res.json(images);
+    });
+});
 // Route pour enregistrer la conversation et les "AGI Thoughts"
 app.post('/api/sync-soup', (req, res) => {
     const { content, sessionID, type } = req.body;
@@ -104,6 +118,14 @@ app.post('/api/sync-soup', (req, res) => {
     } catch (err) {
         res.status(500).json({ error: "Échec de l'écriture mémoire" });
     }
+});
+app.get('/api/gallery-list', (req, res) => {
+    const directoryPath = path.join(__dirname, 'docs/pages/galery');
+    fs.readdir(directoryPath, (err, files) => {
+        if (err) return res.status(500).json({ error: "Dossier introuvable" });
+        const images = files.filter(f => f.match(/\.(jpg|jpeg|png|gif)$/));
+        res.json({ images });
+    });
 });
 // ==========================================
 // DEFINITION DU CONTEXTE SYSTEME (L'Oracle)
@@ -176,7 +198,16 @@ app.post('/api/plant-voice', async (req, res) => {
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'docs', 'index.html'));
 });
-
+// Endpoint spécifique pour le Codex
+app.post('/api/codex/plant', async (req, res) => {
+    const { plant, mode, question } = req.body;
+    try {
+        const reponse = await generatePlantResponse(mode, plant, question);
+        res.json({ success: true, reponse });
+    } catch (error) {
+        res.status(500).json({ error: "Erreur du Codex." });
+    }
+});
 // Démarrage du serveur
 app.listen(PORT, () => {
     console.log(`🌱 Serveur "Jardins du Cœur" démarré sur le port ${PORT}`);

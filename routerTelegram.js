@@ -69,6 +69,30 @@ const initTelegramRouter = (app) => {
         
         bot.sendMessage(msg.chat.id, `⚙️ *KERNEL CVNU OUTPUT :*\n\`\`\`\n${cleanResult}\n\`\`\``, { parse_mode: 'Markdown' });
     });
+    // Gestion des photos envoyées par Mickael depuis le terrain
+bot.on('photo', async (msg) => {
+    const chatId = msg.chat.id;
+    // On récupère la meilleure résolution de la photo
+    const photo = msg.photo[msg.photo.length - 1];
+    const fileId = photo.file_id;
+
+    try {
+        const fileLink = await bot.getFileLink(fileId);
+        const fileName = `tg_${Date.now()}.jpg`;
+        const filePath = path.join(__dirname, 'docs/data/pages/galery', fileName);
+
+        // Téléchargement physique dans le dossier galery
+        await download(fileLink, path.join(__dirname, 'docs/data/pages/galery'), { filename: fileName });
+
+        bot.sendMessage(chatId, `📸 Photo reçue ! Elle est maintenant visible dans la galerie dynamique sous le nom : ${fileName}`);
+        
+        // Optionnel : Enregistrer l'occurrence dans soup.md pour l'IA
+        // [Cité : serveur.js /api/sync-soup]
+    } catch (error) {
+        console.error("Erreur téléchargement photo Telegram:", error);
+        bot.sendMessage(chatId, "⚠️ Erreur lors de l'enregistrement de la photo.");
+    }
+});
 // 6. LE CODEX DE CULTURE (Génération via Groq)
     bot.onText(/\/codex ?(.+)?/, async (msg, match) => {
         const chatId = msg.chat.id;

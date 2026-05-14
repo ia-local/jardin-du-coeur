@@ -3,151 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendrier de Saison - Jardins du Cœur</title>
+    <title>Calendrier de Saison - Les Jardins du Cœur</title>
+    
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style>
-        .c-month-section { margin-bottom: 30px; }
-        .c-month-title { 
-            font-size: 1.3rem; color: var(--color-primary); 
-            border-bottom: 2px solid var(--color-primary); 
-            padding-bottom: 8px; margin-bottom: 16px;
-            display: flex; justify-content: space-between;
-        }
-        .c-task-item { 
-            display: flex; align-items: center; justify-content: space-between; 
-            padding: 14px; background: white; border: 1px solid #eee; 
-            border-radius: 8px; margin-bottom: 10px; box-shadow: var(--shadow-soft); 
-        }
-        .c-task-tag { padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; color: white; text-transform: uppercase; }
-        
-        /* Codes couleurs par type d'atelier */
-        .tag-semis { background-color: #D84315; }      /* Orange : Création */
-        .tag-entretien { background-color: #1976D2; }  /* Bleu : Arrosage/Désherbage */
-        .tag-recolte { background-color: #2E7D32; }    /* Vert : Production */
-        .tag-cvnu { background-color: #6A1B9A; }       /* Violet : Valorisation */
 
-        .c-recurrence-hint { font-size: 0.8rem; color: var(--color-secondary); font-weight: bold; }
+    <style>
+        /* --- LAYOUT CALENDRIER --- */
+        .c-calendar-container {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-soft);
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .c-calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .c-month-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .c-nav-btn {
+            background: #f0f0f0;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .c-nav-btn:hover { background: var(--color-secondary); color: white; }
+
+        /* --- GRILLE 7 COLONNES --- */
+        .c-calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: #eee;
+            border: 1px solid #eee;
+        }
+
+        .c-day-name {
+            background: #f8f9fa;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+        }
+
+        .c-day-cell {
+            background: white;
+            min-height: 120px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .c-day-number {
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .c-day-cell--empty { background: #fdfdfd; }
+        .c-day-cell--today { background: rgba(46, 125, 50, 0.05); }
+        .c-day-cell--today .c-day-number { color: var(--color-primary); }
+
+        /* --- INDICATEURS DE TACHES COLORES --- */
+        .c-task-badge {
+            font-size: 0.7rem;
+            padding: 4px 6px;
+            border-radius: 4px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tag-semis { background-color: #D84315; }      /* Orange */
+        .tag-recolte { background-color: #2E7D32; }    /* Vert */
+        .tag-entretien { background-color: #1976D2; }  /* Bleu */
+        .tag-menuiserie { background-color: #6A1B9A; } /* Violet */
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .c-day-cell { min-height: 80px; padding: 4px; }
+            .c-day-name { font-size: 0.6rem; padding: 5px; }
+            .c-task-badge { font-size: 0.6rem; padding: 2px; }
+        }
     </style>
 </head>
 <body class="l-app-layout">
-    
+
     <aside class="c-sidebar">
+        <div class="c-sidebar__header">
+            <span class="material-icons c-sidebar__logo-icon">eco</span>
+            <h1 class="c-sidebar__title">Jardins du Cœur</h1>
+        </div>
         <nav class="c-sidebar__nav">
             <ul class="c-nav-list">
                 <li class="c-nav-item"><a href="dashboard.html" class="c-nav-link"><span class="material-icons">dashboard</span> Tableau de Bord</a></li>
-                <li class="c-nav-item"><a href="calendrier.html" class="c-nav-link c-nav-link--active"><span class="material-icons">calendar_month</span> Calendrier</a></li>
-                </ul>
+                <li class="c-nav-item"><a href="plan-de-culture.html" class="c-nav-link"><span class="material-icons">view_in_ar</span> Plan de Culture 3D</a></li>
+                <li class="c-nav-item"><a href="fiche-plante.html" class="c-nav-link"><span class="material-icons">local_florist</span> Suivi Plante</a></li>
+                <li class="c-nav-item"><a href="cartographie.html" class="c-nav-link"><span class="material-icons">satellite</span> Cartographie</a></li>
+                <li class="c-nav-item"><a href="calendrier.html" class="c-nav-link c-nav-link--active"><span class="material-icons">calendar_month</span> Calendrier & Semis</a></li>
+                <li class="c-nav-item"><a href="assolement.html" class="c-nav-link"><span class="material-icons">autorenew</span> Assolement</a></li>
+                <li class="c-nav-item"><a href="atelier.html" class="c-nav-link"><span class="material-icons">handyman</span> Ateliers & CVNU</a></li>
+                <li class="c-nav-item"><a href="galery.html" class="c-nav-link"><span class="material-icons">photo_library</span> Galerie</a></li>
+            </ul>
         </nav>
-    </aside> 
+        <div class="c-sidebar__footer c-user-widget">
+            <div class="c-user-widget__avatar"><span class="material-icons">person</span></div>
+            <div class="c-user-widget__info">
+                <span class="c-user-widget__name">Bénévole JDC</span>
+                <span class="c-user-widget__points">Points: 120 UTM</span>
+            </div>
+        </div>
+    </aside>
 
     <main class="l-main-content">
         <header class="c-topbar">
-            <h2>Planification Saisonnière 2026</h2>
-            <div class="c-recurrence-hint"><span class="material-icons" style="font-size:16px; vertical-align:middle;">sync</span> Arrosage : Lun/Mer/Ven | Désherbage : Samedi</div>
+            <h2>Calendrier de Production</h2>
+            <div class="c-topbar__actions">
+                <span class="c-badge" style="background: var(--color-primary); color: white;">Bavent, Normandie</span>
+            </div>
         </header>
         
         <section class="l-page-content">
+            <div class="c-calendar-container">
+                <div class="c-calendar-header">
+                    <h3 id="currentMonthYear">Mai 2026</h3>
+                    <div class="c-month-nav">
+                        <button class="c-nav-btn" onclick="changeMonth(-1)"><span class="material-icons">chevron_left</span></button>
+                        <button class="c-nav-btn" onclick="changeMonth(1)"><span class="material-icons">chevron_right</span></button>
+                    </div>
+                </div>
 
-            <div class="c-month-section">
-                <h3 class="c-month-title">Mai 2026 <span>Phase 1</span></h3>
-                <div class="c-task-item">
-                    <div>
-                        <strong>Levée des Radis 18J (Ligne 1)</strong>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted);">Éclaircir les rangs à 3cm dès apparition des premières feuilles.</p>
+                <div class="c-calendar-grid" id="calendarGrid">
+                    <div class="c-day-name">Lun</div>
+                    <div class="c-day-name">Mar</div>
+                    <div class="c-day-name">Mer</div>
+                    <div class="c-day-name">Jeu</div>
+                    <div class="c-day-name">Ven</div>
+                    <div class="c-day-name">Sam</div>
+                    <div class="c-day-name">Dim</div>
+                    
                     </div>
-                    <span class="c-task-tag tag-entretien">Entretien</span>
-                </div>
-                <div class="c-task-item">
-                    <div>
-                        <strong>Repiquage Tomates Marmande</strong>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted);">Transfert des pots vers la Zone A (Assolement Gourmandes).</p>
-                    </div>
-                    <span class="c-task-tag tag-semis">Plantation</span>
-                </div>
-                <div class="c-task-item">
-                    <div>
-                        <strong>Récolte Radis 18J</strong>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted);">Première production du cycle. Valorisation 50 UTM.</p>
-                    </div>
-                    <span class="c-task-tag tag-recolte">Récolte</span>
-                </div>
             </div>
 
-            <div class="c-month-section">
-                <h3 class="c-month-title">Juin 2026 <span>Phase 2</span></h3>
-                <div class="c-task-item">
-                    <div>
-                        <strong>Taille et Tuteurage Tomates</strong>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted);">Atelier menuiserie : installation des tuteurs fabriqués.</p>
-                    </div>
-                    <span class="c-task-tag tag-entretien">Entretien</span>
-                </div>
-                <div class="c-task-item">
-                    <div>
-                        <strong>Récolte Batavia (Planche 1)</strong>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted);">Cultures semées le 07/05. Récolte estimée : 2kg/m².</p>
-                    </div>
-                    <span class="c-task-tag tag-recolte">Récolte</span>
-                </div>
+            <div class="c-card" style="display: flex; gap: 20px; flex-wrap: wrap; padding: 15px;">
+                <div style="display:flex; align-items:center; gap:8px;"><span class="tag-semis" style="width:12px; height:12px; border-radius:2px;"></span> Semis / Plantation</div>
+                <div style="display:flex; align-items:center; gap:8px;"><span class="tag-recolte" style="width:12px; height:12px; border-radius:2px;"></span> Récolte</div>
+                <div style="display:flex; align-items:center; gap:8px;"><span class="tag-entretien" style="width:12px; height:12px; border-radius:2px;"></span> Arrosage / Entretien</div>
+                <div style="display:flex; align-items:center; gap:8px;"><span class="tag-menuiserie" style="width:12px; height:12px; border-radius:2px;"></span> Ateliers Menuiserie</div>
             </div>
-
-            <div class="c-month-section">
-                <h3 class="c-month-title">Juillet - Août 2026 <span>Maintenance</span></h3>
-                <div class="c-task-item">
-                    <div>
-                        <strong>Arrosage Canicule (Pépinière & Terre)</strong>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted);">Urgence active sur le Bot Telegram.</p>
-                    </div>
-                    <span class="c-task-tag tag-entretien">Arrosage</span>
-                </div>
-                <div class="c-task-item">
-                    <div>
-                        <strong>Récolte Tomates Marmande</strong>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted);">Pic de production. Validation des compétences CVNU récolte.</p>
-                    </div>
-                    <span class="c-task-tag tag-recolte">Récolte</span>
-                </div>
-            </div>
-
-            <div class="c-month-section">
-                <h3 class="c-month-title">Sept. - Oct. 2026 <span>Clôture</span></h3>
-                <div class="c-task-item">
-                    <div>
-                        <strong>Récolte Panais & Poireaux</strong>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted);">Légumes racines profonds semés en mai.</p>
-                    </div>
-                    <span class="c-task-tag tag-recolte">Récolte</span>
-                </div>
-                <div class="c-task-item">
-                    <div>
-                        <strong>Semis Engrais Verts (Moutarde)</strong>
-                        <p style="font-size: 0.85rem; color: var(--color-text-muted);">Préparation de l'assolement Année 2.</p>
-                    </div>
-                    <span class="c-task-tag tag-semis">Semis</span>
-                </div>
-            </div>
-
         </section>
-
-        <footer class="c-mobile-nav">
-            <a href="dashboard.html" class="c-mobile-nav__item">
-                <span class="material-icons">dashboard</span><span>Home</span>
-            </a>
-            <a href="plan-de-culture.html" class="c-mobile-nav__item">
-                <span class="material-icons">view_in_ar</span><span>Plan</span>
-            </a>
-            <a href="fiche-plante.html" class="c-mobile-nav__item active">
-                <span class="material-icons">local_florist</span><span>Suivi</span>
-            </a>
-            <a href="atelier.html" class="c-mobile-nav__item">
-                <span class="material-icons">handyman</span><span>Ateliers</span>
-            </a>
-            <a href="galery.html" class="c-mobile-nav__item">
-                <span class="material-icons">photo_library</span><span>Galerie</span>
-            </a>
-        </footer>
     </main>
+
+    <footer class="c-mobile-nav">
+        <a href="dashboard.html" class="c-mobile-nav__item"><span class="material-icons">dashboard</span><span>Home</span></a>
+        <a href="plan-de-culture.html" class="c-mobile-nav__item"><span class="material-icons">view_in_ar</span><span>Plan 3D</span></a>
+        <a href="fiche-plante.html" class="c-mobile-nav__item"><span class="material-icons">local_florist</span><span>Suivi</span></a>
+        <a href="atelier.html" class="c-mobile-nav__item"><span class="material-icons">handyman</span><span>Ateliers</span></a>
+        <a href="galery.html" class="c-mobile-nav__item"><span class="material-icons">photo_library</span><span>Galerie</span></a>
+    </footer>
+
+    <script>
+        // Logique de génération du calendrier
+        let currentDate = new Date(2026, 4, 1); // Démarre en Mai 2026
+
+        const tasks = [
+            { day: 4, type: 'tag-entretien', label: 'Travail du sol' },
+            { day: 7, type: 'tag-semis', label: 'Semis Radis/Panais' },
+            { day: 7, type: 'tag-semis', label: 'Repiquage Salades' },
+            { day: 11, type: 'tag-entretien', label: 'Eclaircir Radis' },
+            { day: 12, type: 'tag-entretien', label: 'Suivi levée' },
+            { day: 15, type: 'tag-semis', label: 'P. de Terre' },
+            { day: 15, type: 'tag-menuiserie', label: 'Atelier Palettes' },
+            { day: 27, type: 'tag-recolte', label: 'Récolte Radis 18j' }
+        ];
+
+        function renderCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            const header = document.getElementById('currentMonthYear');
+            
+            // Nettoyer la grille (garder les noms de jours)
+            const dayNames = Array.from(grid.querySelectorAll('.c-day-name'));
+            grid.innerHTML = '';
+            dayNames.forEach(name => grid.appendChild(dayNames[0].parentNode === null ? name : name));
+
+            const month = currentDate.getMonth();
+            const year = currentDate.getFullYear();
+            header.innerText = currentDate.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            // Ajustement pour lundi comme premier jour (JS: 0=Dim, 1=Lun...)
+            let startingDay = firstDay === 0 ? 6 : firstDay - 1;
+
+            // Cellules vides
+            for (let i = 0; i < startingDay; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'c-day-cell c-day-cell--empty';
+                grid.appendChild(cell);
+            }
+
+            // Jours du mois
+            for (let d = 1; d <= daysInMonth; d++) {
+                const cell = document.createElement('div');
+                cell.className = 'c-day-cell';
+                if (d === 15 && month === 4) cell.classList.add('c-day-cell--today'); // Simule le 15 mai
+
+                cell.innerHTML = `<span class="c-day-number">${d}</span>`;
+                
+                // Ajouter les tâches correspondantes
+                tasks.filter(t => t.day === d && month === 4).forEach(t => {
+                    const badge = document.createElement('div');
+                    badge.className = `c-task-badge ${t.type}`;
+                    badge.innerText = t.label;
+                    cell.appendChild(badge);
+                });
+
+                grid.appendChild(cell);
+            }
+        }
+
+        function changeMonth(step) {
+            currentDate.setMonth(currentDate.getMonth() + step);
+            renderCalendar();
+        }
+
+        document.addEventListener('DOMContentLoaded', renderCalendar);
+    </script>
     <script src="../js/script.js"></script>
 </body>
 </html>

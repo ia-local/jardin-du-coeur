@@ -116,37 +116,14 @@
                 <button class="c-filter-btn">Vie Sociale</button>
             </div>
 
-            <div class="c-gallery-grid" id="gallery-root">
-                <script>
-                    const photos = [
-                        { id: 1, desc: "Installation de la serre", date: "07/05/2026" },
-                        { id: 2, desc: "Atelier semis de radis", date: "07/05/2026" },
-                        { id: 3, desc: "Lignes de 10m tracées", date: "07/05/2026" },
-                        { id: 4, desc: "Arrivée des plants de tomates", date: "07/05/2026" },
-                        { id: 5, desc: "Préparation du compost", date: "07/05/2026" },
-                        { id: 6, desc: "Bénévoles en action", date: "07/05/2026" },
-                        { id: 7, desc: "Vue aérienne de la Zone A", date: "07/05/2026" },
-                        { id: 8, desc: "Détail levée (test)", date: "07/05/2026" },
-                        { id: 9, desc: "Outillage rangé", date: "07/05/2026" },
-                        { id: 10, desc: "Coucher de soleil sur Bavent", date: "07/05/2026" }
-                    ];
+<section class="l-page-content">
+    <div class="c-gallery-filters">
+        </div>
 
-                    const root = document.getElementById('gallery-root');
-                    photos.forEach(p => {
-                        root.innerHTML += `
-                            <div class="c-photo-card" onclick="openFullView('galery/${p.id}.jpg')">
-                                <div class="c-photo-img-container">
-                                    <img src="galery/${p.id}.jpg" alt="${p.desc}" class="c-photo-img">
-                                </div>
-                                <div class="c-photo-caption">
-                                    <strong>${p.desc}</strong>
-                                    <span class="c-photo-date">${p.date}</span>
-                                </div>
-                            </div>
-                        `;
-                    });
-                </script>
-            </div>
+    <div class="c-gallery-grid" id="gallery-root">
+        <div class="c-loading">Chargement de la galerie dynamique...</div>
+    </div>
+</section>
         </section>
 
         <footer class="c-mobile-nav">
@@ -169,5 +146,6 @@
             document.getElementById('lightbox').style.display = 'flex';
         }
     </script>
+    <script src="../js/sync-gallery.js"></script>
 </body>
 </html>
