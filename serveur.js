@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 const groq = new Groq({
     apiKey: process.env.GROQ_API_KEY
 });
-
+const BACKEND_URL = "https://ia-local.github.io/jardin-du-coeur/";
 // Middlewares
 app.use(cors());
 app.use(express.json());
@@ -25,7 +25,7 @@ const telegramManager = initTelegram(app);
 // Chargement en mémoire de votre base de données JSON pour la donner en contexte à l'IA
 let gardenData = "";
 try {
-    const dbPath = path.join(__dirname, 'database.json');
+    const dbPath = path.join(__dirname, 'docs/database.json');
     if (fs.existsSync(dbPath)) {
         const rawData = fs.readFileSync(dbPath, 'utf8');
         // On convertit le JSON en chaîne de caractères pour l'injecter dans le prompt
@@ -36,7 +36,7 @@ try {
 }
 let chronoData = "";
 try {
-    const chronoPath = path.join(__dirname, 'chronologie.json');
+    const chronoPath = path.join(__dirname, 'docs/json/chronologie.json');
     if (fs.existsSync(chronoPath)) {
         chronoData = `Historique du projet : ${fs.readFileSync(chronoPath, 'utf8')}`;
     }

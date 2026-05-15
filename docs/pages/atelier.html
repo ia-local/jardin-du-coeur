@@ -3,208 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ateliers & Réinsertion - Jardins du Cœur</title>
+    <title>Ateliers & Formation - Jardins du Cœur</title>
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        /* --- GRILLE D'ATELIERS MOBILE-FIRST --- */
         .c-atelier-grid { 
             display: grid; 
-            grid-template-columns: 1fr; /* 1 colonne par défaut sur mobile */
-            gap: 20px; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 24px; 
             margin-bottom: 40px;
         }
 
         .c-atelier-card { 
-            display: flex;
-            flex-direction: column;
-            border: 1px solid #e0e0e0; 
-            position: relative; 
-            overflow: hidden;
-            transition: transform 0.2s;
+            display: flex; flex-direction: column;
+            border: 1px solid #e0e0e0; position: relative; 
+            overflow: hidden; transition: transform 0.3s ease;
+            background: white; border-radius: 12px;
+            box-shadow: var(--shadow-soft);
         }
-        
-        .c-atelier-card:hover { transform: translateY(-3px); }
+        .c-atelier-card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0,0,0,0.1); }
 
-        /* Indicateur de catégorie */
-        .c-atelier-card::before { 
-            content: ''; 
-            position: absolute; 
-            top: 0; left: 0; right: 0; 
-            height: 6px; 
+        /* Style de l'image d'illustration */
+        .c-atelier-img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            background: #f0f0f0;
+            border-bottom: 1px solid #eee;
         }
-        
-        .cat-prod::before { background: #D84315; }     /* Production/Semis */
-        .cat-care::before { background: #1976D2; }     /* Entretien/Arrosage */
-        .cat-harvest::before { background: #2E7D32; }  /* Récolte */
-        .cat-infra::before { background: #6A1B9A; }    /* Infrastructure/Menuiserie */
+
+        /* Couleurs Catégories (Barre supérieure) */
+        .c-atelier-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; z-index: 2; }
+        .cat-prod::before { background: #D84315; } 
+        .cat-care::before { background: #1976D2; } 
+        .cat-harvest::before { background: #2E7D32; } 
+        .cat-infra::before { background: #6A1B9A; } 
 
         .c-atelier-content { padding: 20px; flex: 1; }
-        .c-atelier-title { font-size: 1.1rem; color: var(--color-primary); margin-bottom: 8px; }
-        .c-atelier-meta { font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 12px; }
+        .c-atelier-title { font-size: 1.15rem; color: var(--color-primary); margin-bottom: 8px; font-weight: bold; }
+        .c-atelier-meta { font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 12px; display: flex; align-items: center; gap: 5px; }
 
         .c-cvnu-points { 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 4px; 
-            background: rgba(216, 67, 21, 0.1); 
-            color: var(--color-secondary); 
-            padding: 6px 12px; 
-            border-radius: 20px; 
-            font-weight: bold; 
-            font-size: 0.9rem;
+            display: inline-flex; align-items: center; gap: 4px; 
+            background: rgba(216, 67, 21, 0.1); color: var(--color-secondary); 
+            padding: 6px 12px; border-radius: 20px; font-weight: bold; font-size: 0.85rem;
         }
 
-        /* --- MEDIA QUERIES TABLETTE / DESKTOP --- */
-        @media (min-width: 768px) {
-            .c-atelier-grid { grid-template-columns: repeat(2, 1fr); }
+        .c-modal {
+            display: none; position: fixed; inset: 0; z-index: 3000;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+            align-items: center; justify-content: center; padding: 15px;
         }
-        @media (min-width: 1024px) {
-            .c-atelier-grid { grid-template-columns: repeat(3, 1fr); }
-        }
+        .c-modal.is-active { display: flex; }
+        .c-modal__container { background: white; width: 100%; max-width: 600px; border-radius: 16px; overflow: hidden; position: relative; animation: slideUp 0.3s ease-out; }
+        .c-modal__video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #000; }
+        .c-modal__video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .c-modal__body { padding: 20px; }
+        .c-modal__close { position: absolute; top: 10px; right: 10px; z-index: 10; background: white; border-radius: 50%; padding: 5px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     </style>
 </head>
 <body class="l-app-layout">
     
     <aside class="c-sidebar">
-        <div class="c-sidebar__header">
-            <span class="material-icons c-sidebar__logo-icon">eco</span>
-            <h1 class="c-sidebar__title">Jardins du Cœur</h1>
-        </div>
+        <div class="c-sidebar__header"><span class="material-icons">eco</span> Jardins du Cœur</div>
         <nav class="c-sidebar__nav">
             <ul class="c-nav-list">
-                <li class="c-nav-item"><a href="dashboard.html" class="c-nav-link"><span class="material-icons">dashboard</span> Tableau de Bord</a></li>
+                <li class="c-nav-item"><a href="dashboard.html" class="c-nav-link"><span class="material-icons">dashboard</span> Dashboard</a></li>
                 <li class="c-nav-item"><a href="plan-de-culture.html" class="c-nav-link"><span class="material-icons">view_in_ar</span> Plan 3D</a></li>
-                <li class="c-nav-item"><a href="fiche-plante.html" class="c-nav-link"><span class="material-icons">local_florist</span> Suivi Plante</a></li>
-                <li class="c-nav-item"><a href="calendrier.html" class="c-nav-link"><span class="material-icons">calendar_month</span> Calendrier</a></li>
-                <li class="c-nav-item"><a href="atelier.html" class="c-nav-link c-nav-link--active"><span class="material-icons">handyman</span> Ateliers & CVNU</a></li>
-                <li class="c-nav-item"><a href="galery.html" class="c-nav-link"><span class="material-icons">photo_library</span> Galerie</a></li>
+                <li class="c-nav-item"><a href="atelier.html" class="c-nav-link c-nav-link--active"><span class="material-icons">handyman</span> Ateliers</a></li>
             </ul>
         </nav>
-        <div class="c-sidebar__footer c-user-widget">
-            <div class="c-user-widget__avatar"><span class="material-icons">person</span></div>
-            <div class="c-user-widget__info">
-                <span class="c-user-widget__name">Bénévole JDC</span>
-                <span class="c-user-widget__points">120 UTM</span>
-            </div>
-        </div>
     </aside> 
 
     <main class="l-main-content">
         <header class="c-topbar">
-            <h2>Missions & Valorisation CVNU</h2>
-            <div class="c-topbar__actions">
-                <span class="c-badge">Saison 2026</span>
-            </div>
+            <h2>Missions & Formations Illustrées</h2>
+            <div class="c-topbar__actions"><span class="c-badge">Mickael-647</span></div>
         </header>
         
         <section class="l-page-content">
-            <p style="margin-bottom: 24px; color: var(--color-text-muted);">
-                Participez aux ateliers pour accumuler des <strong>Unités de Travail Mobiles (UTM)</strong> et certifier vos compétences agronomiques.
-            </p>
-            
             <div class="c-atelier-grid">
                 
-                <div class="c-card c-atelier-card cat-care">
-                    <div class="c-atelier-content">
-                        <h3 class="c-atelier-title">Arrosage & Gestion Hydrique</h3>
-                        <div class="c-atelier-meta">
-                            <span class="material-icons" style="font-size:14px; vertical-align:middle;">schedule</span> Lun-Mer-Ven | 1h00
-                        </div>
-                        <p style="font-size: 0.9rem;">Maintien de l'humidité des planches de 10m et surveillance de la pépinière.</p>
-                        <div class="c-cvnu-points"><span class="material-icons" style="font-size: 16px;">water_drop</span> + 15 UTM</div>
-                    </div>
-                    <button class="c-btn-action" style="margin: 0 20px 20px 20px;">S'inscrire</button>
-                </div>
-
-                <div class="c-card c-atelier-card cat-care">
-                    <div class="c-atelier-content">
-                        <h3 class="c-atelier-title">Désherbage Sélectif</h3>
-                        <div class="c-atelier-meta">
-                            <span class="material-icons" style="font-size:14px; vertical-align:middle;">event</span> Samedi matin | 2h00
-                        </div>
-                        <p style="font-size: 0.9rem;">Nettoyage de la Zone A (Radis/Salades) pour favoriser la croissance sans concurrence.</p>
-                        <div class="c-cvnu-points"><span class="material-icons" style="font-size: 16px;">grass</span> + 25 UTM</div>
-                    </div>
-                    <button class="c-btn-action" style="margin: 0 20px 20px 20px;">S'inscrire</button>
-                </div>
-
                 <div class="c-card c-atelier-card cat-prod">
+                    <img src="../data/ateliers/semis.jpg" alt="Semis de précision" class="c-atelier-img">
                     <div class="c-atelier-content">
-                        <h3 class="c-atelier-title">Semis de Succession</h3>
-                        <div class="c-atelier-meta">
-                            <span class="material-icons" style="font-size:14px; vertical-align:middle;">history_edu</span> Selon calendrier | 2h30
-                        </div>
-                        <p style="font-size: 0.9rem;">Préparation des godets pour la prochaine rotation des salades et radis.</p>
-                        <div class="c-cvnu-points"><span class="material-icons" style="font-size: 16px;">egg_alt</span> + 30 UTM</div>
+                        <div class="c-cvnu-points">✨ + 35 UTM</div>
+                        <h3 class="c-atelier-title">Semis de Précision</h3>
+                        <div class="c-atelier-meta"><span class="material-icons">psychology</span> Pépinière</div>
+                        <p style="font-size: 0.9rem;">Apprendre le dosage du substrat et la profondeur pour les salades.</p>
                     </div>
-                    <button class="c-btn-action" style="margin: 0 20px 20px 20px;">S'inscrire</button>
+                    <button class="c-btn-action" style="margin: 0 20px 20px;" onclick="openAtelier('semis')">Détails</button>
+                </div>
+
+                <div class="c-card c-atelier-card cat-care">
+                    <img src="../data/ateliers/desherbage.jpg" alt="Désherbage" class="c-atelier-img">
+                    <div class="c-atelier-content">
+                        <div class="c-cvnu-points">🌿 + 20 UTM</div>
+                        <h3 class="c-atelier-title">Désherbage Sélectif</h3>
+                        <div class="c-atelier-meta"><span class="material-icons">grass</span> Entretien</div>
+                        <p style="font-size: 0.9rem;">Identifier les adventices sur les lignes de Radis et Panais.</p>
+                    </div>
+                    <button class="c-btn-action" style="margin: 0 20px 20px;" onclick="openAtelier('desherbage')">Consignes</button>
                 </div>
 
                 <div class="c-card c-atelier-card cat-harvest">
+                    <img src="../data/ateliers/recolte.jpg" alt="Récolte" class="c-atelier-img">
                     <div class="c-atelier-content">
-                        <h3 class="c-atelier-title">Récolte & Conditionnement</h3>
-                        <div class="c-atelier-meta">
-                            <span class="material-icons" style="font-size:14px; vertical-align:middle;">shopping_basket</span> Fin Mai | 1h30
-                        </div>
-                        <p style="font-size: 0.9rem;">Récolte des premiers Radis 18J, pesée et préparation des paniers solidaires.</p>
-                        <div class="c-cvnu-points"><span class="material-icons" style="font-size: 16px;">auto_graph</span> + 40 UTM</div>
+                        <div class="c-cvnu-points">🧺 + 40 UTM</div>
+                        <h3 class="c-atelier-title">Récolte & Pesée</h3>
+                        <div class="c-atelier-meta"><span class="material-icons">shopping_basket</span> Logistique</div>
+                        <p style="font-size: 0.9rem;">Cueillette des radis 18J et traçabilité des paniers.</p>
                     </div>
-                    <button class="c-btn-action" style="margin: 0 20px 20px 20px;">S'inscrire</button>
+                    <button class="c-btn-action" style="margin: 0 20px 20px;" onclick="openAtelier('recolte')">Participer</button>
                 </div>
 
                 <div class="c-card c-atelier-card cat-infra">
+                    <img src="../data/ateliers/web.jpg" alt="Web CVNU" class="c-atelier-img">
                     <div class="c-atelier-content">
-                        <h3 class="c-atelier-title">Atelier Menuiserie : Tuteurs</h3>
-                        <div class="c-atelier-meta">
-                            <span class="material-icons" style="font-size:14px; vertical-align:middle;">handyman</span> Sur demande | 4h00
-                        </div>
-                        <p style="font-size: 0.9rem;">Fabrication de tuteurs en bois pour les 25 plants de tomates du plan 3D.</p>
-                        <div class="c-cvnu-points"><span class="material-icons" style="font-size: 16px;">construction</span> + 50 UTM</div>
+                        <div class="c-cvnu-points">💻 + 100 UTM</div>
+                        <h3 class="c-atelier-title">Maintenance Web CVNU</h3>
+                        <div class="c-atelier-meta"><span class="material-icons">code</span> Système</div>
+                        <p style="font-size: 0.9rem;">Mise à jour du jumeau numérique et synchronisation JSON.</p>
                     </div>
-                    <button class="c-btn-action" style="margin: 0 20px 20px 20px;">S'inscrire</button>
+                    <button class="c-btn-action" style="margin: 0 20px 20px;" onclick="openAtelier('web-cvnu')">Ouvrir</button>
                 </div>
-            <div class="c-card c-atelier-card cat-infra">
-                <div class="c-atelier-content">
-                    <h3 class="c-atelier-title">Construction Box "Palette"</h3>
-                    <div class="c-atelier-meta"><span class="material-icons" style="font-size:14px;">recycling</span> Récupération | 3h00</div>
-                    <p>Assemblage de bacs de culture surélevés à partir de palettes. Idéal pour optimiser l'espace.</p>
-                    <div class="c-cvnu-points">🛠️ + 45 UTM</div>
-                </div>
-                <button class="c-btn-action">Consulter le plan</button>
-            </div>
 
-            <div class="c-card c-atelier-card cat-infra">
-                <div class="c-atelier-content">
-                    <h3 class="c-atelier-title">Station de Rempotage</h3>
-                    <div class="c-atelier-meta"><span class="material-icons" style="font-size:14px;">precision_manufacturing</span> Ergonomie | 4h00</div>
-                    <p>Création d'un plan de travail dédié au bouturage et à la préparation des godets.</p>
-                    <div class="c-cvnu-points">📐 + 60 UTM</div>
+                <div class="c-card c-atelier-card cat-infra">
+                    <img src="../data/ateliers/rempotage.jpg" alt="Rempotage" class="c-atelier-img">
+                    <div class="c-atelier-content">
+                        <div class="c-cvnu-points">📐 + 60 UTM</div>
+                        <h3 class="c-atelier-title">Station de Rempotage</h3>
+                        <div class="c-atelier-meta"><span class="material-icons">precision_manufacturing</span> Menuiserie</div>
+                        <p style="font-size: 0.9rem;">Conception d'un plan de travail surélevé et ergonomique.</p>
+                    </div>
+                    <button class="c-btn-action" style="margin: 0 20px 20px;" onclick="openAtelier('rempotage')">Voir Vidéo</button>
                 </div>
-                <button class="c-btn-action">Voir Vidéo</button>
-            </div>
+
+                <div class="c-card c-atelier-card cat-infra">
+                    <img src="../data/ateliers/serre.jpg" alt="Serre" class="c-atelier-img">
+                    <div class="c-atelier-content">
+                        <div class="c-cvnu-points">🏠 + 80 UTM</div>
+                        <h3 class="c-atelier-title">Construction de la Serre</h3>
+                        <div class="c-atelier-meta"><span class="material-icons">architecture</span> Montage</div>
+                        <p style="font-size: 0.9rem;">Installation de l'armature et de la bâche thermique.</p>
+                    </div>
+                    <button class="c-btn-action" style="margin: 0 20px 20px;" onclick="openAtelier('serre-construction')">Guide</button>
+                </div>
+
             </div>
         </section>
-
-        <footer class="c-mobile-nav">
-            <a href="dashboard.html" class="c-mobile-nav__item">
-                <span class="material-icons">dashboard</span><span>Home</span>
-            </a>
-            <a href="plan-de-culture.html" class="c-mobile-nav__item">
-                <span class="material-icons">view_in_ar</span><span>Plan 3D</span>
-            </a>
-            <a href="fiche-plante.html" class="c-mobile-nav__item">
-                <span class="material-icons">local_florist</span><span>Suivi</span>
-            </a>
-            <a href="atelier.html" class="c-mobile-nav__item active">
-                <span class="material-icons">handyman</span><span>Ateliers</span>
-            </a>
-            <a href="galery.html" class="c-mobile-nav__item">
-                <span class="material-icons">photo_library</span><span>Galerie</span>
-            </a>
-        </footer>
     </main>
 
-    <script src="../js/script.js"></script>
+    <div id="atelierModal" class="c-modal">
+        <div class="c-modal__container">
+            <span class="material-icons c-modal__close" onclick="closeModal()">close</span>
+            <div class="c-modal__video-wrapper"><div id="videoContainer"></div></div>
+            <div class="c-modal__body">
+                <h3 id="modalTitle" class="c-atelier-title"></h3>
+                <p id="modalDesc" style="font-size: 0.9rem; line-height: 1.4; color: #444; margin-bottom: 15px;"></p>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div id="modalUTM" class="c-cvnu-points"></div>
+                    <button class="c-btn-action" onclick="alert('Inscription validée')">S'inscrire</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Le script de gestion des données reste identique pour assurer la compatibilité
+        const atelierData = {
+            'semis': { title: "Semis de Précision", desc: "Maîtrise du substrat et de la profondeur de semis.", video: "", utm: "35 UTM" },
+            'desherbage': { title: "Désherbage Sélectif", desc: "Technique du sarclage manuel.", video: "https://www.youtube.com/embed/dQw4w9WgXcQ", utm: "20 UTM" },
+            'recolte': { title: "Récolte & Pesée", desc: "Manipulation délicate et traçabilité.", video: "", utm: "40 UTM" },
+            'web-cvnu': { title: "Maintenance Web CVNU", desc: "Debug frontend et mise à jour JSON.", video: "", utm: "100 UTM" },
+            'rempotage': { title: "Station de Rempotage", desc: "Assemblage d'une station ergonomique pour limiter la fatigue.", video: "https://www.youtube.com/embed/oDls1bNPRyw", utm: "60 UTM" },
+            'serre-construction': { title: "Montage de la Serre", desc: "Installation de la structure et bâche 4 saisons.", video: "https://www.youtube.com/embed/dQw4w9WgXcQ", utm: "80 UTM" },
+            'box-palette': { title: "Construction Box Palette", desc: "Bacs surélevés à partir de matériaux de récupération.", video: "https://www.youtube.com/embed/dQw4w9WgXcQ", utm: "45 UTM" }
+        };
+
+        function openAtelier(id) {
+            const data = atelierData[id];
+            if(!data) return;
+            document.getElementById('modalTitle').innerText = data.title;
+            document.getElementById('modalDesc').innerText = data.desc;
+            document.getElementById('modalUTM').innerText = "✨ " + data.utm;
+            const container = document.getElementById('videoContainer');
+            container.innerHTML = data.video ? `<iframe src="${data.video}" allowfullscreen></iframe>` : `<div style="padding:40px; color:white; text-align:center;">Vidéo en préparation</div>`;
+            document.getElementById('atelierModal').classList.add('is-active');
+        }
+
+        function closeModal() {
+            document.getElementById('atelierModal').classList.remove('is-active');
+            document.getElementById('videoContainer').innerHTML = '';
+        }
+
+        window.onclick = (e) => { if (e.target == document.getElementById('atelierModal')) closeModal(); }
+    </script>
 </body>
 </html>

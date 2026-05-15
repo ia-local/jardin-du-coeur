@@ -3,223 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jumeau Numérique 3D - Les Jardins du Cœur</title>
-    
+    <title>Maraîchage Planificateur V3 - Les Jardins du Cœur</title>
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
     <style>
-        /* --- LAYOUT GLOBAL --- */
-        .c-3d-layout { display: grid; grid-template-columns: 1fr 320px; gap: 24px; }
-        .c-view-main { display: flex; flex-direction: column; gap: 20px; }
+        .c-editor-frame { display: grid; grid-template-columns: 1fr 320px; gap: 24px; height: calc(100vh - 160px); }
+        #canvas-app { width: 100%; height: 100%; border-radius: 12px; position: relative; background: #87CEEB; overflow: hidden; }
         
-        #canvas-container { 
-            width: 100%; height: 500px; border-radius: var(--border-radius); 
-            box-shadow: var(--shadow-soft); overflow: hidden; position: relative;
-            background: #87CEEB;
+        /* Toolbars */
+        .c-floating-tools { position: absolute; top: 15px; left: 15px; z-index: 10; display: flex; flex-direction: column; gap: 8px; }
+        .c-view-nav { position: absolute; bottom: 15px; right: 15px; z-index: 10; display: flex; gap: 5px; background: white; padding: 5px; border-radius: 20px; box-shadow: var(--shadow-soft); }
+        
+        .c-legend-panel { background: white; padding: 20px; border-radius: 12px; box-shadow: var(--shadow-soft); overflow-y: auto; }
+        .c-active-tool-display { background: var(--color-primary); color: white; padding: 12px; border-radius: 8px; text-align: center; margin-bottom: 20px; }
+        
+        .c-tool-item { 
+            display: flex; align-items: center; gap: 12px; padding: 10px; border: 1px solid #eee; 
+            border-radius: 8px; cursor: pointer; margin-bottom: 8px; transition: 0.2s;
         }
+        .c-tool-item:hover { border-color: var(--color-secondary); }
+        .c-tool-item.is-selected { background: #f0f7f0; border: 2px solid var(--color-primary); }
 
-        /* --- TIMELINE SOUS LE CANEVA --- */
-        .c-timeline-wrapper {
-            background: white; padding: 20px; border-radius: var(--border-radius);
-            box-shadow: var(--shadow-soft); overflow-x: auto;
-        }
-        .c-timeline-list { display: flex; gap: 20px; padding-bottom: 10px; }
-        .c-timeline-entry {
-            min-width: 220px; padding: 12px; border-left: 4px solid var(--color-primary);
-            background: #f9f9f9; border-radius: 6px; cursor: pointer; transition: 0.2s;
-        }
-        .c-timeline-entry:hover { background: #f0f7f0; transform: translateY(-3px); }
-        .c-entry-date { font-size: 0.8rem; font-weight: bold; color: var(--color-secondary); }
-        .c-entry-content strong { display: block; font-size: 0.95rem; margin-top: 4px; }
-        .c-entry-content p { font-size: 0.8rem; color: #666; margin: 0; line-height: 1.3; }
+        .c-btn-tool-sm { border: none; background: none; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-size: 0.75rem; font-weight: bold; }
+        .c-btn-tool-sm.active { background: var(--color-secondary); color: white; }
 
-        /* --- UI PARCELLE --- */
-        .c-parcel-info { background: white; padding: 24px; border-radius: var(--border-radius); box-shadow: var(--shadow-soft); height: fit-content; }
-        .c-data-row { margin-bottom: 12px; font-size: 0.95rem; }
-        .c-data-row span { font-weight: 600; color: var(--color-text-main); }
-
-        .c-3d-overlay {
-            position: absolute; bottom: 16px; left: 16px;
-            background: rgba(255,255,255,0.8); padding: 8px 12px;
-            border-radius: 8px; font-size: 0.85rem; pointer-events: none;
-        }
-
-        /* --- RESPONSIVE MOBILE-FIRST --- */
-        @media (max-width: 768px) {
-            .c-3d-layout { grid-template-columns: 1fr; }
-            #canvas-container { height: 350px; }
-            .c-timeline-entry { min-width: 180px; }
-        }
+        @media (max-width: 768px) { .c-editor-frame { grid-template-columns: 1fr; } #canvas-app { height: 400px; } }
     </style>
 </head>
 <body class="l-app-layout">
-
     <aside class="c-sidebar">
-        <div class="c-sidebar__header">
-            <span class="material-icons c-sidebar__logo-icon">eco</span>
-            <h1 class="c-sidebar__title">Jardins du Cœur</h1>
-        </div>
+        <div class="c-sidebar__header"><span class="material-icons">eco</span> Jardins du Cœur</div>
         <nav class="c-sidebar__nav">
             <ul class="c-nav-list">
-                <li class="c-nav-item"><a href="dashboard.html" class="c-nav-link"><span class="material-icons">dashboard</span> Tableau de Bord</a></li>
+                <li class="c-nav-item"><a href="dashboard.html" class="c-nav-link"><span class="material-icons">dashboard</span> Home</a></li>
                 <li class="c-nav-item"><a href="plan-de-culture.html" class="c-nav-link c-nav-link--active"><span class="material-icons">view_in_ar</span> Plan 3D</a></li>
-                <li class="c-nav-item"><a href="fiche-plante.html" class="c-nav-link"><span class="material-icons">local_florist</span> Suivi</a></li>
-                <li class="c-nav-item"><a href="atelier.html" class="c-nav-link"><span class="material-icons">handyman</span> Ateliers</a></li>
-                <li class="c-nav-item"><a href="galery.html" class="c-nav-link"><span class="material-icons">photo_library</span> Galerie</a></li>
             </ul>
         </nav>
     </aside>
 
     <main class="l-main-content">
         <header class="c-topbar">
-            <h2>Plan de Culture 3D : Bavent</h2>
-            <span class="c-badge c-badge--alert">Vue J+2</span>
+            <h2>Éditeur Maraîcher (250m²)</h2>
+            <div class="c-tool-group">
+                <input type="file" id="import-json" style="display:none" onchange="GardenData.importJSON(event)">
+                <button class="c-btn-action" style="background:#6c757d" onclick="document.getElementById('import-json').click()">📂 Importer</button>
+                <button class="c-btn-action" onclick="GardenData.exportJSON()">💾 Exporter</button>
+            </div>
         </header>
-        
-        <section class="l-page-content c-3d-layout">
-            <div class="c-view-main">
-                <div id="canvas-container">
-                    <div class="c-3d-overlay">Toucher: Sélection | Glisser: Rotation</div>
-                </div>
 
-                <div class="c-timeline-wrapper">
-                    <h4 style="margin-bottom:15px; display:flex; align-items:center; gap:8px;">
-                        <span class="material-icons">history</span> Chronologie du Jardin
-                    </h4>
-                    <div class="c-timeline-list" id="timeline-list">
-                        <div class="c-timeline-entry">
-                            <span class="c-entry-date">04 Mai</span>
-                            <div class="c-entry-content"><strong>Préparation</strong><p>Acquisition & Terre retournée</p></div>
-                        </div>
-                        <div class="c-timeline-entry">
-                            <span class="c-entry-date">07 Mai</span>
-                            <div class="c-entry-content"><strong>Plantations</strong><p>Radis, Panais, Poireaux, Salades</p></div>
-                        </div>
-                    </div>
+        <section class="l-page-content c-editor-frame">
+            <div id="canvas-app">
+                <div class="c-view-nav">
+                    <button class="c-btn-tool-sm active" id="view-3d" onclick="GardenEngine.setView('3d')">3D</button>
+                    <button class="c-btn-tool-sm" id="view-2d" onclick="GardenEngine.setView('2d')">2D Plan</button>
                 </div>
             </div>
 
-            <aside class="c-parcel-info">
-                <h3>Parcelle <span id="ui-parcel-id">---</span></h3>
-                <div class="c-data-row">État : <span id="ui-sol">Terre retournée</span></div>
-                <hr style="margin: 15px 0; border: 0; border-top: 1px solid #eee;">
-                <h4 style="margin-bottom: 10px;">Culture active</h4>
-                <div class="c-data-row">Plante : <span id="ui-plante">--</span></div>
-                <div class="c-data-row">Date : <span id="ui-date">--/--/----</span></div>
-                <button class="c-btn-action" onclick="planterTomate()">+ Action Culture</button>
+            <aside class="c-legend-panel">
+                <div class="c-active-tool-display">
+                    <small>Outil sélectionné :</small>
+                    <div id="tool-label">SÉLECTION</div>
+                </div>
+                
+                <div id="legend-list">
+                    </div>
+
+                <div id="parcel-info" style="margin-top:20px; font-size:0.9rem; border-top:1px solid #eee; padding-top:15px;">
+                    <p><strong>Ligne :</strong> <span id="ui-id">---</span></p>
+                    <p><strong>Culture :</strong> <span id="ui-content">---</span></p>
+                </div>
             </aside>
         </section>
-
-        <footer class="c-mobile-nav">
-            <a href="dashboard.html" class="c-mobile-nav__item"><span class="material-icons">dashboard</span><span>Home</span></a>
-            <a href="plan-de-culture.html" class="c-mobile-nav__item active"><span class="material-icons">view_in_ar</span><span>Plan 3D</span></a>
-            <a href="fiche-plante.html" class="c-mobile-nav__item"><span class="material-icons">local_florist</span><span>Suivi</span></a>
-            <a href="atelier.html" class="c-mobile-nav__item"><span class="material-icons">handyman</span><span>Ateliers</span></a>
-            <a href="galery.html" class="c-mobile-nav__item"><span class="material-icons">photo_library</span><span>Galerie</span></a>
-        </footer>
     </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="../js/script.js"></script>
-
-    <script>
-        // --- INITIALISATION THREE.JS ---
-        const container = document.getElementById('canvas-container');
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x87CEEB);
-        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
-        camera.position.set(-8, 12, 18);
-
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(container.clientWidth, container.clientHeight);
-        renderer.shadowMap.enabled = true;
-        container.appendChild(renderer.domElement);
-
-        const controls = new THREE.OrbitControls(camera, renderer.domElement);
-        controls.target.set(12, 0, 5);
-        controls.update();
-
-        scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-        const sun = new THREE.DirectionalLight(0xffffff, 0.8);
-        sun.position.set(10, 20, 10);
-        sun.castShadow = true;
-        scene.add(sun);
-
-        // --- TERRAIN (250m²) ---
-        const colonnes = 25; const lignes = 10;
-        const parcelles = [];
-        const matTerre = new THREE.MeshLambertMaterial({ color: 0x4B3621 });
-
-        for (let x = 0; x < colonnes; x++) {
-            for (let z = 0; z < lignes; z++) {
-                const mesh = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.1, 0.95), matTerre);
-                mesh.position.set(x, 0, z);
-                mesh.receiveShadow = true;
-                mesh.userData = { id: `X${x}-Z${z}`, plante: null };
-                scene.add(mesh);
-                parcelles.push(mesh);
-            }
-        }
-
-        // --- CABANE (Fond à droite) ---
-        const cabane = new THREE.Mesh(new THREE.BoxGeometry(2, 2.5, 2), new THREE.MeshLambertMaterial({color: 0x8B4513}));
-        cabane.position.set(23.5, 1.25, 8.5);
-        scene.add(cabane);
-
-        // --- RENDU DES 4 PREMIÈRES LIGNES (Opposé Cabane) ---
-        function dessinerPlanchesInitiales() {
-            const config = [
-                { x: 0, nom: "Radis 18J", couleur: 0xFF4081 },
-                { x: 1, nom: "Panais", couleur: 0xFFF9C4 },
-                { x: 2, nom: "Poireau", couleur: 0x81C784 },
-                { x: 3, nom: "Salade Batavia", couleur: 0x4CAF50 }
-            ];
-
-            config.forEach(pl => {
-                for (let z = 0; z < lignes; z++) {
-                    const plant = new THREE.Mesh(
-                        new THREE.CylinderGeometry(0.08, 0.08, 0.4, 6),
-                        new THREE.MeshLambertMaterial({ color: pl.couleur })
-                    );
-                    plant.position.set(pl.x, 0.2, z);
-                    scene.add(plant);
-                    
-                    // Link data
-                    const pBase = parcelles.find(p => p.position.x === pl.x && p.position.z === z);
-                    if (pBase) pBase.userData.plante = pl.nom;
-                }
-            });
-        }
-
-        // --- INTERACTION ---
-        const raycaster = new THREE.Raycaster();
-        const mouse = new THREE.Vector2();
-
-        container.addEventListener('pointerdown', (e) => {
-            const rect = renderer.domElement.getBoundingClientRect();
-            mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-            mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-            raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(parcelles);
-            if (intersects.length > 0) {
-                const p = intersects[0].object;
-                document.getElementById('ui-parcel-id').innerText = p.userData.id;
-                document.getElementById('ui-plante').innerText = p.userData.plante || "Libre";
-                document.getElementById('ui-date').innerText = p.userData.plante ? "07/05/2026" : "--";
-            }
-        });
-
-        function animate() { requestAnimationFrame(animate); renderer.render(scene, camera); }
-        animate();
-        dessinerPlanchesInitiales();
-
-        window.addEventListener('resize', () => {
-            camera.aspect = container.clientWidth / container.clientHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(container.clientWidth, container.clientHeight);
-        });
-    </script>
+    
+    <script src="../js/garden-data.js"></script>
+    <script src="../js/garden-engine.js"></script>
+    <script src="../js/garden-ui.js"></script>
 </body>
 </html>
